@@ -1,0 +1,7 @@
+extends: eslint:recommended
+plugins:
+  - eslint-plugin
+parserOptions:
+  ecmaVersion: 6
+env:
+  node : true
