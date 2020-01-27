@@ -79,7 +79,7 @@ function isTestFile(context) {
 }
 
 function getObjectNameForNode(node) {
-  if (isMemberExpressionWithIdentifier(node.parent.object) || hasNestedMember(node.parent) || isThisIdentifier(node.parent.object)) {
+  if (isMemberExpressionWithIdentifier(node.parent.object) || hasNestedMember(node.parent) || isThisIdentifierInExpression(node.parent.object)) {
     return node.parent.object.property.name;
   } else if (isDotOn(node.parent)) {
     return 'this';
@@ -89,7 +89,7 @@ function getObjectNameForNode(node) {
   } else if (isCallExpression(node.parent.object) && isMemberExpressionWithObjectIdentifier(node.parent.object.callee)) {
     const argsList = getArgumentsString(node.parent.object.arguments);
     return `${node.parent.object.callee.object.name}.${node.parent.object.callee.property.name}(${argsList})`;
-  } else if (notSure2(node.parent)) {
+  } else if (isObjectIdentifier(node.parent)) {
     return node.parent.object.name;
   }
 }
@@ -99,7 +99,7 @@ function getArgumentsString(args) {
 }
 
 function stringifyNode(node) {
-  if (node.type === 'MemberExpression' && isThisIdentifier(node)) {
+  if (node.type === 'MemberExpression' && isThisIdentifierInExpression(node)) {
     return `this.${node.property.name}`;
   } else if (isMemberExpressionWithObjectIdentifier(node)) {
     return `${node.object.name}.${node.property.name}`;
@@ -126,7 +126,7 @@ function isEventSubscription(node) {
     node.parent.parent.arguments[0].value !== '$destroy';
 }
 
-// someObject.attribute
+// this.boo, this.aaa.bbb.ccc, $scope.uiState
 function isMemberExpressionWithIdentifier(node) {
   return node.type === 'MemberExpression' &&
     node.property &&
@@ -139,19 +139,19 @@ function isDotOn(node) {
     node.property.name === 'on';
 }
 
-// func(value) or someObject.func(value)
+// func(value), someObject.func(value), angular.element(document.body)
 function isCallExpression(node) {
   return node.type === 'CallExpression' &&
     node.callee &&
     node.arguments;
 }
 
-// func(value)
+// func(value), $(document.body), $(this.target)
 function calleeIsIdentifier(node) {
   return node.object.callee.type === 'Identifier';
 }
 
-// someObject.func(value)
+// someObject.func(value), angular.element(document.body), myElement.recur()
 function isMemberExpressionWithObjectIdentifier(node) {
   return isMemberExpressionWithIdentifier(node) &&
     node.object &&
@@ -166,16 +166,15 @@ function hasNestedMember(node) {
     node.object.property.type === 'Identifier';
 }
 
-// Not sure...
-function isThisIdentifier(node) {
+function isThisIdentifierInExpression(node) {
   return node.object &&
     node.object.type === 'ThisExpression' &&
     node.property &&
     node.property.type === 'Identifier';
 }
 
-// Not sure...
-function notSure2(node) {
+// $scope, stdout, response
+function isObjectIdentifier(node) {
   return node.object.name &&
     node.object.type === 'Identifier';
 }

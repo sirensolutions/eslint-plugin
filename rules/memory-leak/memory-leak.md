@@ -1,7 +1,7 @@
 # Prevent subscribing to event without deregistration (`memory-leak`)
 When subscribing to events, you must remember to add an associated deregistration somewhere in your component's lifecycle. Otherwise, continual event subscriptions will build up and cause memory usage issues. So, when the following happens:
 ```js
-const removeEventListener = x.$on('some-event', () => console.log('even happened'));
+const removeEventListener = x.on('some-event', () => console.log('even happened'));
 ``` 
 Any of these must also be found in the same file:
 ```js
