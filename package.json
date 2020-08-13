@@ -25,5 +25,8 @@
     "hooks": {
       "pre-commit": "npm run lint && npm test"
     }
+  },
+  "dependencies": {
+    "sync-request": "^6.1.0"
   }
 }
