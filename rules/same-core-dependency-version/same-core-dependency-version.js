@@ -13,15 +13,16 @@ module.exports = {
     schema: [] // no options
   },
   create: context => {
-    const filename = context.getFilename();
-    if (path.basename(filename) !== 'package.json') {
+    if (path.basename(context.getFilename()) !== 'package.json') {
       return {};
+    } else if (!process.env.GITHUB_TOKEN) {
+      throw new Error('GITHUB_TOKEN environment variable not set');
     }
 
     const [dependencyLinesStart, dependencyLines] = getDependencyLines(context.getSourceCode().lines);
 
     const packageJson = JSON.parse(context.getSourceCode().text.replace('module.exports = ', ''));
-    const coreDependencies = getCoreDependencies();
+    const coreDependencies = getCoreDependencies(process.env.GITHUB_TOKEN);
 
     for (const [dependency, version] of Object.entries(packageJson.dependencies)) {
       if (!!coreDependencies[dependency] && coreDependencies[dependency] !== version) {
@@ -34,7 +35,6 @@ module.exports = {
             }
           }
         });
-
       }
     }
 
@@ -42,10 +42,10 @@ module.exports = {
   }
 };
 
-function getCoreDependencies() {
+function getCoreDependencies(githubToken) {
   const branch = 'master';
-  const url = `https://raw.githubusercontent.com/sirensolutions/kibi-internal/${branch}/package.json?token=${process.env.GITHUB_TOKEN}`;
-  const responseBody = request('GET', url).getBody();
+  const url = `https://raw.githubusercontent.com/sirensolutions/kibi-internal/${branch}/package.json`;
+  const responseBody = request('GET', url, { headers: { Authorization: `token ${githubToken}` } }).getBody();
   return JSON.parse(responseBody).dependencies;
 }
 
