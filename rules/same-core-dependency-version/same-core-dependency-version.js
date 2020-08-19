@@ -13,10 +13,8 @@ module.exports = {
     schema: [] // no options
   },
   create: context => {
-    if (path.basename(context.getFilename()) !== 'package.json') {
+    if (path.basename(context.getFilename()) !== 'package.json' || !process.env.GITHUB_TOKEN) {
       return {};
-    } else if (!process.env.GITHUB_TOKEN) {
-      throw new Error('GITHUB_TOKEN environment variable not set');
     }
 
     const [dependencyLinesStart, dependencyLines] = getDependencyLines(context.getSourceCode().lines);
