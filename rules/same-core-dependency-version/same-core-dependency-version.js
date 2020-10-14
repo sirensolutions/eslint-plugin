@@ -23,6 +23,9 @@ module.exports = {
     const [dependencyLinesStart, dependencyLines] = getDependencyLines(context.getSourceCode().lines);
 
     const packageJson = JSON.parse(packageJsonContents.replace('module.exports = ', ''));
+    if (!packageJson.dependencies) {
+      return {};
+    }
     const coreDependencies = getCoreDependencies(process.env.GITHUB_TOKEN);
 
     for (const [dependency, version] of Object.entries(packageJson.dependencies)) {
