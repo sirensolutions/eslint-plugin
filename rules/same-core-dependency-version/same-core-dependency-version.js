@@ -1,7 +1,10 @@
 const path = require('path');
 const request = require('sync-request');
 
+let packageJsonContents;
+
 module.exports = {
+  registerPackageJsonContents: fileContents => packageJsonContents = fileContents,
   meta: {
     type: 'problem',
     docs: {
@@ -13,13 +16,13 @@ module.exports = {
     schema: [] // no options
   },
   create: context => {
-    if (path.basename(context.getFilename()) !== 'package.json' || !process.env.GITHUB_TOKEN) {
+    if (!packageJsonContents || path.basename(context.getFilename()) !== 'package.json' || !process.env.GITHUB_TOKEN) {
       return {};
     }
 
     const [dependencyLinesStart, dependencyLines] = getDependencyLines(context.getSourceCode().lines);
 
-    const packageJson = JSON.parse(context.getSourceCode().text.replace('module.exports = ', ''));
+    const packageJson = JSON.parse(packageJsonContents.replace('module.exports = ', ''));
     const coreDependencies = getCoreDependencies(process.env.GITHUB_TOKEN);
 
     for (const [dependency, version] of Object.entries(packageJson.dependencies)) {
