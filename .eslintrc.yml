@@ -2,6 +2,6 @@ extends: eslint:recommended
 plugins:
   - eslint-plugin
 parserOptions:
-  ecmaVersion: 6
+  ecmaVersion: 2018
 env:
   node : true
