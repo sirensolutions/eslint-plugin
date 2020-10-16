@@ -1,6 +1,6 @@
 {
   "name": "eslint-plugin-siren",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Provides custom eslint rules developed by Siren",
   "main": "index.js",
   "repository": {
@@ -26,7 +26,7 @@
       "pre-commit": "npm run lint && npm test"
     }
   },
-  "dependencies": {
+  "peerDependencies": {
     "sync-request": "^6.1.0"
   }
 }
