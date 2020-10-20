@@ -3,6 +3,7 @@
   "version": "1.2.0",
   "description": "Provides custom eslint rules developed by Siren",
   "main": "index.js",
+  "license": "SEE LICENSE IN LICENSE.md",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/sirensolutions/eslint-plugin-siren.git"
@@ -16,10 +17,9 @@
     "test": "jest"
   },
   "devDependencies": {
-    "eslint": "^6.8.0",
-    "eslint-plugin-eslint-plugin": "^2.2.1",
-    "husky": "^4.2.1",
-    "jest": "^25.1.0"
+    "eslint-plugin-eslint-plugin": "^2.3.0",
+    "husky": "^4.3.0",
+    "jest": "^26.6.0"
   },
   "husky": {
     "hooks": {
@@ -27,6 +27,23 @@
     }
   },
   "peerDependencies": {
-    "sync-request": "^6.1.0"
+    "@typescript-eslint/eslint-plugin": "^4.5.0",
+    "@typescript-eslint/parser": "^4.5.0",
+    "eslint": "^7.11.0",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-jest": "^24.1.0",
+    "eslint-plugin-react": "^7.21.5",
+    "eslint-plugin-react-hooks": "^4.1.2",
+    "typescript": ">=3.0.0"
+  },
+  "dependencies": {
+    "@typescript-eslint/eslint-plugin": "^4.5.0",
+    "@typescript-eslint/parser": "^4.5.0",
+    "eslint": "^7.11.0",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-jest": "^24.1.0",
+    "eslint-plugin-react": "^7.21.5",
+    "eslint-plugin-react-hooks": "^4.1.2",
+    "typescript": "^4.0.3"
   }
 }
