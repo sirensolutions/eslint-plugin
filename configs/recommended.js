@@ -22,10 +22,16 @@ module.exports = {
     'plugin:react/recommended',
     'plugin:react-hooks/recommended'
   ],
-  plugins: ['jest', 'react', 'react-hooks', 'import', 'siren'],
+  plugins: ['react', 'react-hooks', 'import', 'prefer-object-spread', 'siren'],
   parserOptions: {
     ecmaVersion: 2018,
     sourceType: 'module'
+  },
+  env: {
+    browser: true,
+    node: true,
+    es6: true,
+    jest: true
   },
   rules: {
     'no-unused-vars': 'off',
@@ -35,17 +41,19 @@ module.exports = {
     'import/no-unresolved': ['error', { ignore: ['^ui/.*', '^plugins/.*'] }],
     'no-multiple-empty-lines': ['error', { max: 2, maxEOF: 0, maxBOF: 0 }],
     'quotes': ['error', 'single', { 'avoidEscape': true }],
-    'siren/memory-leak': 'warn',
-    'siren/same-core-dependency-version': 'warn',
     'react/no-multi-comp': 'off',
     'react/display-name': 'off',
     'react/prop-types': 'off',
     'react-hooks/rules-of-hooks': 'error',
-    'react-hooks/exhaustive-deps': 'warn'
+    'react-hooks/exhaustive-deps': 'warn',
+    'prefer-object-spread/prefer-object-spread': 'error',
+    'siren/memory-leak': 'warn',
+    'siren/same-core-dependency-version': 'warn'
   },
   overrides: [
     {
       files: '*.tsx?',
+      plugins: ['@typescript-eslint'],
       extends: ['plugin:@typescript-eslint/recommended'],
       rules: typescriptRules
     },
@@ -54,7 +62,8 @@ module.exports = {
         '*.{test,spec}.[jt]sx?',
         '{tests,__tests__}/**/*.[jt]sx?'
       ],
-      extends: ['plugin:jest/recommended', 'plugin:jest/style'],
+      plugins: ['jest', 'mocha'],
+      extends: ['plugin:jest/recommended', 'plugin:jest/style', 'plugin:mocha/recommended'],
       env: {
         'jest/globals': true
       }
@@ -75,9 +84,6 @@ module.exports = {
       node: {
         extensions: ['.js', '.jsx', '.ts', '.tsx']
       }
-    },
-    env: {
-      'jest/globals': true
     }
   }
 };
