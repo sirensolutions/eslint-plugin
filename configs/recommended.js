@@ -1,7 +1,9 @@
 const typescriptRules = {
+  'no-unused-vars': 'off',
+  '@typescript-eslint/no-unused-vars': 'off',
+  '@typescript-eslint/no-unused-vars-experimental': ['error', { ignoreArgsIfArgsAfterAreUsed: true }],
   '@typescript-eslint/no-var-requires': 'off',
   '@typescript-eslint/no-explicit-any': 'off',
-  '@typescript-eslint/no-unused-vars': 'off',
   '@typescript-eslint/no-use-before-define': 'off',
   '@typescript-eslint/ban-ts-comment': 'off',
   'semi': 'off',
@@ -14,7 +16,7 @@ const typescriptRules = {
   '@typescript-eslint/explicit-module-boundary-types': ['error', { allowArgumentsExplicitlyTypedAsAny: true }],
   '@typescript-eslint/ban-types': ['error', { 'types': { '{}': false } }],
   '@typescript-eslint/no-inferrable-types': ['error', { 'ignoreParameters': false, 'ignoreProperties': true }]
-}
+};
 
 module.exports = {
   parser: '@typescript-eslint/parser',
@@ -34,7 +36,7 @@ module.exports = {
     jest: true
   },
   rules: {
-    'no-unused-vars': 'off',
+    'no-unused-vars': 'error',
     'no-console': ['warn', { allow: ['warn', 'error'] }],
     'eol-last': 'error',
     'no-multi-spaces': 'error',
@@ -48,30 +50,34 @@ module.exports = {
     'react-hooks/exhaustive-deps': 'warn',
     'prefer-object-spread/prefer-object-spread': 'error',
     'siren/memory-leak': 'warn',
-    'siren/same-core-dependency-version': 'warn'
+    'siren/same-core-dependency-version': 'error'
   },
   overrides: [
     {
-      files: '*.tsx?',
+      files: ['*.ts', '*.tsx'],
       plugins: ['@typescript-eslint'],
       extends: ['plugin:@typescript-eslint/recommended'],
       rules: typescriptRules
     },
     {
-      files: [
-        '*.{test,spec}.[jt]sx?',
-        '{tests,__tests__}/**/*.[jt]sx?'
-      ],
-      plugins: ['jest', 'mocha'],
-      extends: ['plugin:jest/recommended', 'plugin:jest/style', 'plugin:mocha/recommended'],
+      files: ['*.test.[jt]s', '*.test.[jt]sx'],
+      plugins: ['jest'],
+      extends: ['plugin:jest/recommended', 'plugin:jest/style'],
       env: {
         'jest/globals': true
       }
     },
     {
+      files: ['{tests,__tests__}/**/*.[jt]s', '{tests,__tests__}/**/*.[jt]sx'],
+      plugins: ['mocha'],
+      extends: ['plugin:mocha/recommended']
+    },
+    {
       files: [
-        '*.{test,spec}.tsx?',
-        '{tests,__tests__}/**/*.tsx?'
+        '*.{test,spec}.ts',
+        '*.{test,spec}.tsx',
+        '{tests,__tests__}/**/*.ts',
+        '{tests,__tests__}/**/*.tsx'
       ],
       rules: typescriptRules
     }
