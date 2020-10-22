@@ -11,7 +11,7 @@ const typescriptRules = {
   '@typescript-eslint/type-annotation-spacing': 'error',
   '@typescript-eslint/member-delimiter-style': 'error',
   '@typescript-eslint/indent': ['error', 2],
-  '@typescript-eslint/explicit-member-accessibility': ['error', { accessibility: 'no-public' }],
+  '@typescript-eslint/explicit-member-accessibility': 'error',
   '@typescript-eslint/explicit-function-return-type': ['error', { allowExpressions: true, allowTypedFunctionExpressions: true }],
   '@typescript-eslint/explicit-module-boundary-types': ['error', { allowArgumentsExplicitlyTypedAsAny: true }],
   '@typescript-eslint/ban-types': ['error', { 'types': { '{}': false } }],
