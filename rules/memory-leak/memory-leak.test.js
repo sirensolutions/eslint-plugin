@@ -3,7 +3,7 @@ const rule = require('./memory-leak');
 
 const ruleTester = new RuleTester();
 
-const expectedError = { ruleId: 'memory-leak', message: 'Event listener is never removed' };
+const expectedError = { message: 'Event listener is never removed' };
 ruleTester.run('memory-leak', rule, {
   valid: [
     'console.log("this is fine")',

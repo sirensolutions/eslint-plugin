@@ -1,9 +1,13 @@
 const fs = require('fs');
 const path = require('path');
+const recommended = require('./configs/recommended');
 const memoryLeak = require('./rules/memory-leak/memory-leak');
 const sameCoreDependencyVersion = require('./rules/same-core-dependency-version/same-core-dependency-version');
 
 module.exports = {
+  configs: {
+    recommended
+  },
   rules: {
     'memory-leak': memoryLeak,
     'same-core-dependency-version': sameCoreDependencyVersion
