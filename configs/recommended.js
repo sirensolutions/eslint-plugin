@@ -1,5 +1,5 @@
 const typescriptRules = {
- 'no-unused-vars': 'off',
+  'no-unused-vars': 'off',
   '@typescript-eslint/no-unused-vars': 'off',
   '@typescript-eslint/no-unused-vars-experimental': ['error', { ignoreArgsIfArgsAfterAreUsed: true }],
   '@typescript-eslint/no-var-requires': 'off',
