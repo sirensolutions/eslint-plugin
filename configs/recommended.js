@@ -1,5 +1,5 @@
 const typescriptRules = {
-  'no-unused-vars': 'off',
+ 'no-unused-vars': 'off',
   '@typescript-eslint/no-unused-vars': 'off',
   '@typescript-eslint/no-unused-vars-experimental': ['error', { ignoreArgsIfArgsAfterAreUsed: true }],
   '@typescript-eslint/no-var-requires': 'off',
@@ -24,7 +24,7 @@ module.exports = {
     'plugin:react/recommended',
     'plugin:react-hooks/recommended'
   ],
-  plugins: ['react', 'react-hooks', 'import', 'prefer-object-spread', 'siren'],
+  plugins: ['react', 'react-hooks', 'import', 'prefer-object-spread', '@sirensolutions'],
   parserOptions: {
     ecmaVersion: 2018,
     sourceType: 'module'
@@ -49,8 +49,8 @@ module.exports = {
     'react-hooks/rules-of-hooks': 'error',
     'react-hooks/exhaustive-deps': 'warn',
     'prefer-object-spread/prefer-object-spread': 'error',
-    'siren/memory-leak': 'warn',
-    'siren/same-core-dependency-version': 'error'
+    '@sirensolutions/memory-leak': 'warn',
+    '@sirensolutions/same-core-dependency-version': 'error'
   },
   overrides: [
     {
