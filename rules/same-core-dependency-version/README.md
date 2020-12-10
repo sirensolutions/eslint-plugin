@@ -16,7 +16,7 @@ To configure the exclussion add the following to your .eslitrc.yml
 
 ```
 rules:
-  siren/same-core-dependency-version: [ 'error', { ignore: ['dependencyName1, dependencyName2'] }]
+  siren/same-core-dependency-version: [ 'error', { ignore: ['dependencyName1', 'dependencyName2'] }]
 ```
 
 
