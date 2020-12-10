@@ -21,6 +21,7 @@ const typescriptRules = {
 module.exports = {
   parser: '@typescript-eslint/parser',
   extends: [
+    '@elastic/eslint-config-kibana',
     'plugin:react/recommended',
     'plugin:react-hooks/recommended'
   ],
@@ -40,6 +41,7 @@ module.exports = {
     'no-console': ['warn', { allow: ['warn', 'error'] }],
     'eol-last': 'error',
     'no-multi-spaces': 'error',
+    'import/no-default-export': 'off',
     'import/no-unresolved': ['error', { ignore: ['^ui/.*', '^plugins/.*'] }],
     'no-multiple-empty-lines': ['error', { max: 2, maxEOF: 0, maxBOF: 0 }],
     'quotes': ['error', 'single', { 'avoidEscape': true }],
