@@ -43,7 +43,7 @@ module.exports = {
     for (const [dependency, version] of Object.entries(packageJson.dependencies)) {
       const ignoreOption = context.options[0];
       if (
-        ignoreOption && ignoreOption.exclude.length > 0 &&
+        ignoreOption && ignoreOption.ignore.length > 0 &&
         ignoreOption.ignore.includes(dependency)
       ) {
           continue;
