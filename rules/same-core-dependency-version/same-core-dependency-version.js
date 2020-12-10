@@ -17,7 +17,7 @@ module.exports = {
       {
         type: 'object',
         properties: {
-          exclude: {
+          ignore: {
             type: 'array',
             items: {
               type: 'string'
@@ -41,10 +41,10 @@ module.exports = {
     const coreDependencies = getCoreDependencies(process.env.GITHUB_TOKEN);
 
     for (const [dependency, version] of Object.entries(packageJson.dependencies)) {
-      const excludeOption = context.options[0];
+      const ignoreOption = context.options[0];
       if (
-        excludeOption && excludeOption.exclude.length > 0 &&
-        excludeOption.exclude.includes(dependency)
+        ignoreOption && ignoreOption.exclude.length > 0 &&
+        ignoreOption.ignore.includes(dependency)
       ) {
           continue;
       }

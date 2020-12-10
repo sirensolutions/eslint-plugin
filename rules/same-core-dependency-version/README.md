@@ -11,12 +11,12 @@ This rule ensures that if your repo lists a dependency used by kibi-internal, it
   0:5  warning  Investigate core uses 0.20.0, but this repo uses 0.17.1 of 'axios'     siren/same-core-dependency-version
 ``` 
 
-Since version 2.1.0 this rule accepts an "exclude" option which allow to exclude a list of dependencies from the check 
+Since version 2.1.0 this rule accepts an "ignore" option which allow to ignore a list of dependencies from the check 
 To configure the exclussion add the following to your .eslitrc.yml
 
 ```
 rules:
-  siren/same-core-dependency-version: [ 'error', { exclude: ['dependencyName1, dependencyName2']}]
+  siren/same-core-dependency-version: [ 'error', { ignore: ['dependencyName1, dependencyName2'] }]
 ```
 
 
