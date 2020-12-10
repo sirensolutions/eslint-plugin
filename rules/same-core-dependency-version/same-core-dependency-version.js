@@ -13,7 +13,19 @@ module.exports = {
       recommended: true,
       url: 'https://github.com/sirensolutions/eslint-plugin-siren/blob/master/rules/same-core-dependency-version/same-core-dependency-version.md'
     },
-    schema: [] // no options
+    schema: [
+      {
+        type: 'object',
+        properties: {
+          exclude: {
+            type: 'array',
+            items: {
+              type: 'string'
+            }
+          }
+        }
+      }
+    ]
   },
   create: context => {
     if (!packageJsonContents || path.basename(context.getFilename()) !== 'package.json' || !process.env.GITHUB_TOKEN) {
@@ -29,6 +41,14 @@ module.exports = {
     const coreDependencies = getCoreDependencies(process.env.GITHUB_TOKEN);
 
     for (const [dependency, version] of Object.entries(packageJson.dependencies)) {
+      const excludeOption = context.options[0];
+      if (
+        excludeOption && excludeOption.exclude.length > 0 &&
+        excludeOption.exclude.includes(dependency)
+      ) {
+          continue;
+      }
+
       if (!!coreDependencies[dependency] && coreDependencies[dependency] !== version) {
         context.report({
           message: `Investigate core uses ${coreDependencies[dependency]}, but this repo uses ${version} of '${dependency}'`,
