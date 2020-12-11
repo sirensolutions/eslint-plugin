@@ -27,7 +27,7 @@
     }
   },
   "peerDependencies": {
-    "@elastic/eslint-config-kibana": "sirensolutions/kbn-packages#elastic-eslint-config-kibana-v7.8.0-1-gitpkg",
+    "@elastic/eslint-config-kibana": "^0.7.0",
     "@typescript-eslint/eslint-plugin": "^4.5.0",
     "@typescript-eslint/parser": "^4.5.0",
     "eslint": "^7.11.0",

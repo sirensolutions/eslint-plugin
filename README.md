@@ -14,7 +14,24 @@ To use the config:
 
 1. Install the peer dependencies
    ```shell
-   npm install --save-dev eslint typescript @typescript-eslint/eslint-plugin @typescript-eslint/parser eslint-plugin-jest eslint-plugin-react eslint-plugin-react-hooks eslint-plugin-import sync-request
+   npm install --save-dev \
+      eslint \
+      eslint-plugin-jest \
+      eslint-plugin-react \
+      eslint-plugin-react-hooks \
+      eslint-plugin-import \
+      eslint-plugin-mocha \
+      eslint-plugin-prefer-object-spread \
+      eslint-plugin-babel \
+      eslint-plugin-ban \
+      eslint-plugin-jsx-a11y \
+      eslint-plugin-no-unsanitized \
+      babel-eslint \
+      sync-request \
+      typescript \
+      @typescript-eslint/eslint-plugin \
+      @typescript-eslint/parser \
+      @elastic/eslint-config-kibana@sirensolutions/kbn-packages#elastic-eslint-config-kibana-v7.8.0-1-gitpkg
    ```
    When [eslint/eslint#13481](https://github.com/eslint/eslint/issues/13481) is complete, you will no longer have to install peer dependencies for ESLint configs, but for now it's a necessary evil.
 
