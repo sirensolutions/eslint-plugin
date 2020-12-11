@@ -46,7 +46,6 @@ module.exports = {
     'import/no-unresolved': ['error', { ignore: ['^ui/.*', '^plugins/.*', 'ng_mock'] }],
     'no-multiple-empty-lines': ['error', { max: 2, maxEOF: 0, maxBOF: 0 }],
     'no-duplicate-imports': 'error',
-    'no-shadow': 'error',
     'quotes': ['error', 'single', { 'avoidEscape': true }],
     "no-use-before-define": "off",
     "@typescript-eslint/no-use-before-define": ["error", { "functions": false, "classes": false }],
