@@ -11,7 +11,7 @@ module.exports = {
       description: 'If a dependency is also specified in the kibi-internal repo, it must have the same version here',
       category: 'Best Practices',
       recommended: true,
-      url: 'https://github.com/sirensolutions/eslint-plugin-siren/blob/master/rules/same-core-dependency-version/same-core-dependency-version.md'
+      url: 'https://github.com/sirensolutions/eslint-plugin/blob/master/rules/same-core-dependency-version/same-core-dependency-version.md'
     },
     schema: [] // no options
   },

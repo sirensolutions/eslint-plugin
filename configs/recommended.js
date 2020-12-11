@@ -8,6 +8,8 @@ const typescriptRules = {
   '@typescript-eslint/ban-ts-comment': 'off',
   'semi': 'off',
   '@typescript-eslint/semi': 'error',
+  "no-duplicate-imports": "off",
+  "@typescript-eslint/no-duplicate-imports": "error",
   '@typescript-eslint/type-annotation-spacing': 'error',
   '@typescript-eslint/member-delimiter-style': 'error',
   '@typescript-eslint/indent': ['error', 2],
@@ -21,7 +23,7 @@ const typescriptRules = {
 module.exports = {
   parser: '@typescript-eslint/parser',
   extends: [
-    '@elastic/eslint-config-kibana',
+    '@elastic/kibana',
     'plugin:react/recommended',
     'plugin:react-hooks/recommended'
   ],
@@ -42,8 +44,10 @@ module.exports = {
     'eol-last': 'error',
     'no-multi-spaces': 'error',
     'import/no-default-export': 'off',
-    'import/no-unresolved': ['error', { ignore: ['^ui/.*', '^plugins/.*'] }],
+    'import/no-unresolved': ['error', { ignore: ['^ui/.*', '^plugins/.*', 'ng_mock'] }],
     'no-multiple-empty-lines': ['error', { max: 2, maxEOF: 0, maxBOF: 0 }],
+    'no-duplicate-imports': 'error',
+    'no-shadow': 'error',
     'quotes': ['error', 'single', { 'avoidEscape': true }],
     'react/no-multi-comp': 'off',
     'react/display-name': 'off',
