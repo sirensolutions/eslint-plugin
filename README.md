@@ -26,12 +26,12 @@ To use the config:
       eslint-plugin-ban \
       eslint-plugin-jsx-a11y \
       eslint-plugin-no-unsanitized \
+      eslint-import-resolver-node \
       babel-eslint \
       sync-request \
       typescript \
       @typescript-eslint/eslint-plugin \
-      @typescript-eslint/parser \
-      @elastic/eslint-config-kibana@sirensolutions/kbn-packages#elastic-eslint-config-kibana-v7.8.0-1-gitpkg
+      @typescript-eslint/parser
    ```
    When [eslint/eslint#13481](https://github.com/eslint/eslint/issues/13481) is complete, you will no longer have to install peer dependencies for ESLint configs, but for now it's a necessary evil.
 

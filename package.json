@@ -27,7 +27,6 @@
     }
   },
   "peerDependencies": {
-    "@elastic/eslint-config-kibana": "^0.7.0",
     "@typescript-eslint/eslint-plugin": "^4.5.0",
     "@typescript-eslint/parser": "^4.5.0",
     "eslint": "^7.11.0",
@@ -40,6 +39,7 @@
     "typescript": ">=3.0.0"
   },
   "dependencies": {
+    "@elastic/eslint-config-kibana": "^0.7.0",
     "@typescript-eslint/eslint-plugin": "^4.5.0",
     "@typescript-eslint/parser": "^4.5.0",
     "eslint": "^7.11.0",
