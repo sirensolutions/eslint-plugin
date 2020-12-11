@@ -49,6 +49,8 @@ module.exports = {
     'quotes': ['error', 'single', { 'avoidEscape': true }],
     "no-use-before-define": "off",
     "@typescript-eslint/no-use-before-define": ["error", { "functions": false, "classes": false }],
+    "no-extra-semi": "off",
+    "@typescript-eslint/no-extra-semi": "error",
     'react/no-multi-comp': 'off',
     'react/display-name': 'off',
     'react/prop-types': 'off',
