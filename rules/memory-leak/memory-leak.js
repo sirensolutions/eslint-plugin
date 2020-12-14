@@ -5,7 +5,7 @@ module.exports = {
       description: 'Disallow x.on() on without corresponding x.off()',
       category: 'Best Practices',
       recommended: true,
-      url: 'https://github.com/sirensolutions/eslint-plugin-siren/blob/master/rules/memory-leak/memory-leak.md'
+      url: 'https://github.com/sirensolutions/eslint-plugin/blob/master/rules/memory-leak/memory-leak.md'
     },
     schema: [] // no options
   },

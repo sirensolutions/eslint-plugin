@@ -4,7 +4,6 @@ const typescriptRules = {
   '@typescript-eslint/no-unused-vars-experimental': ['error', { ignoreArgsIfArgsAfterAreUsed: true }],
   '@typescript-eslint/no-var-requires': 'off',
   '@typescript-eslint/no-explicit-any': 'off',
-  '@typescript-eslint/no-use-before-define': 'off',
   '@typescript-eslint/ban-ts-comment': 'off',
   'semi': 'off',
   '@typescript-eslint/semi': 'error',
@@ -21,6 +20,7 @@ const typescriptRules = {
 module.exports = {
   parser: '@typescript-eslint/parser',
   extends: [
+    '@elastic/kibana',
     'plugin:react/recommended',
     'plugin:react-hooks/recommended'
   ],
@@ -40,9 +40,16 @@ module.exports = {
     'no-console': ['warn', { allow: ['warn', 'error'] }],
     'eol-last': 'error',
     'no-multi-spaces': 'error',
-    'import/no-unresolved': ['error', { ignore: ['^ui/.*', '^plugins/.*'] }],
+    'import/no-default-export': 'off',
+    'import/no-unresolved': ['error', { ignore: ['^ui/.*', '^plugins/.*', 'ng_mock'] }],
     'no-multiple-empty-lines': ['error', { max: 2, maxEOF: 0, maxBOF: 0 }],
     'quotes': ['error', 'single', { 'avoidEscape': true }],
+    "no-duplicate-imports": "off",
+    "@typescript-eslint/no-duplicate-imports": "error",
+    "no-use-before-define": "off",
+    "@typescript-eslint/no-use-before-define": ["error", { "functions": false, "classes": false }],
+    "no-extra-semi": "off",
+    "@typescript-eslint/no-extra-semi": "error",
     'react/no-multi-comp': 'off',
     'react/display-name': 'off',
     'react/prop-types': 'off',

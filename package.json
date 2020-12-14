@@ -1,12 +1,12 @@
 {
   "name": "eslint-plugin-siren",
-  "version": "2.1.0",
+  "version": "2.2.0",
   "description": "Provides custom eslint rules developed by Siren",
   "main": "index.js",
   "license": "SEE LICENSE IN LICENSE.md",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/sirensolutions/eslint-plugin-siren.git"
+    "url": "git+https://github.com/sirensolutions/eslint-plugin.git"
   },
   "keywords": [
     "eslint",
@@ -32,11 +32,14 @@
     "eslint": "^7.11.0",
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-jest": "^24.1.0",
+    "eslint-plugin-mocha": "^8.0.0",
+    "eslint-plugin-prefer-object-spread": "^1.2.1",
     "eslint-plugin-react": "^7.21.5",
     "eslint-plugin-react-hooks": "^4.1.2",
     "typescript": ">=3.0.0"
   },
   "dependencies": {
+    "@elastic/eslint-config-kibana": "^0.7.0",
     "@typescript-eslint/eslint-plugin": "^4.5.0",
     "@typescript-eslint/parser": "^4.5.0",
     "eslint": "^7.11.0",
