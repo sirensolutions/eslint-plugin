@@ -46,9 +46,6 @@ module.exports = {
     options.ignore = options.ignore || [];
     options.coreBranch = options.coreBranch || process.env.CHANGE_TARGET || 'master';
 
-    console.log('#############################')
-    console.log(options);
-    console.log('#############################')
     const coreDependencies = getCoreDependencies(options.coreBranch, process.env.GITHUB_TOKEN);
 
     for (const [dependency, version] of Object.entries(packageJson.dependencies)) {
