@@ -21,12 +21,10 @@ module.exports = {
             type: 'array',
             items: {
               type: 'string'
-            },
-            default: []
+            }
           },
           coreBranch: {
-            type: 'string',
-            default: 'master'
+            type: 'string'
           }
         }
       }
@@ -44,14 +42,17 @@ module.exports = {
       return {};
     }
 
-    const { ignore, coreBranch } = context.options[0] || { ignore: [], coreBranch: process.env.CHANGE_TARGET || 'master' };
+    const options = context.options[0] || {};
+    options.ignore = options.ignore || [];
+    options.coreBranch = options.coreBranch || process.env.CHANGE_TARGET || 'master';
+
     console.log('#############################')
-    console.log({ ignore, coreBranch });
+    console.log(options);
     console.log('#############################')
-    const coreDependencies = getCoreDependencies(coreBranch, process.env.GITHUB_TOKEN);
+    const coreDependencies = getCoreDependencies(options.coreBranch, process.env.GITHUB_TOKEN);
 
     for (const [dependency, version] of Object.entries(packageJson.dependencies)) {
-      if (!!coreDependencies[dependency] && coreDependencies[dependency] !== version && !ignore.includes(dependency)) {
+      if (!!coreDependencies[dependency] && coreDependencies[dependency] !== version && !options.ignore.includes(dependency)) {
         context.report({
           message: `Investigate core uses ${coreDependencies[dependency]}, but this repo uses ${version} of '${dependency}'`,
           loc: {
