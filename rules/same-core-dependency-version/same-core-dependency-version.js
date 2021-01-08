@@ -21,7 +21,12 @@ module.exports = {
             type: 'array',
             items: {
               type: 'string'
-            }
+            },
+            default: []
+          },
+          coreBranch: {
+            type: 'string',
+            default: 'master'
           }
         }
       }
@@ -38,18 +43,15 @@ module.exports = {
     if (!packageJson.dependencies) {
       return {};
     }
-    const coreDependencies = getCoreDependencies(process.env.GITHUB_TOKEN);
+
+    const { ignore, coreBranch } = context.options[0] || { ignore: [], coreBranch: process.env.CHANGE_TARGET || 'master' };
+    console.log('#############################')
+    console.log({ ignore, coreBranch });
+    console.log('#############################')
+    const coreDependencies = getCoreDependencies(coreBranch, process.env.GITHUB_TOKEN);
 
     for (const [dependency, version] of Object.entries(packageJson.dependencies)) {
-      const ignoreOption = context.options[0];
-      if (
-        ignoreOption && ignoreOption.ignore.length > 0 &&
-        ignoreOption.ignore.includes(dependency)
-      ) {
-          continue;
-      }
-
-      if (!!coreDependencies[dependency] && coreDependencies[dependency] !== version) {
+      if (!!coreDependencies[dependency] && coreDependencies[dependency] !== version && !ignore.includes(dependency)) {
         context.report({
           message: `Investigate core uses ${coreDependencies[dependency]}, but this repo uses ${version} of '${dependency}'`,
           loc: {
@@ -66,8 +68,7 @@ module.exports = {
   }
 };
 
-function getCoreDependencies(githubToken) {
-  const branch = 'master';
+function getCoreDependencies(branch, githubToken) {
   const url = `https://raw.githubusercontent.com/sirensolutions/kibi-internal/${branch}/package.json`;
   const responseBody = request('GET', url, { headers: { Authorization: `token ${githubToken}` } }).getBody();
   return JSON.parse(responseBody).dependencies;
