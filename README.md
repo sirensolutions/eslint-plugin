@@ -8,7 +8,7 @@ To use the config:
 
 1. Install the repo:
    ```shell
-   npm install eslint-plugin-siren@sirensolutions/eslint-plugin#<tag>
+   npm install --save-dev eslint-plugin-siren@sirensolutions/eslint-plugin#<tag>
    ```
    Where `<tag>` is the [latest tag available](https://github.com/sirensolutions/eslint-plugin/tags). 
 
