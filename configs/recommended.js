@@ -56,8 +56,9 @@ module.exports = {
     'react-hooks/rules-of-hooks': 'error',
     'react-hooks/exhaustive-deps': 'warn',
     'prefer-object-spread/prefer-object-spread': 'error',
-    'siren/memory-leak': 'warn',
-    'siren/same-core-dependency-version': 'error'
+    'siren/memory-leak': 'error',
+    'siren/same-core-dependency-version': 'error',
+    'siren/nolookbehind': 'error'
   },
   overrides: [
     {

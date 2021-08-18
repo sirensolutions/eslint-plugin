@@ -3,6 +3,7 @@ const path = require('path');
 const recommended = require('./configs/recommended');
 const memoryLeak = require('./rules/memory-leak/memory-leak');
 const sameCoreDependencyVersion = require('./rules/same-core-dependency-version/same-core-dependency-version');
+const nolookbehind = require('./rules/nolookbehind/nolookbehind');
 
 module.exports = {
   configs: {
@@ -10,7 +11,8 @@ module.exports = {
   },
   rules: {
     'memory-leak': memoryLeak,
-    'same-core-dependency-version': sameCoreDependencyVersion
+    'same-core-dependency-version': sameCoreDependencyVersion,
+    'nolookbehind': nolookbehind
   },
   processors: {
     '.json': {

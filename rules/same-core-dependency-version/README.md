@@ -1,23 +1,6 @@
-# Ensure same version as kibi-internal (`same-core-dependency-version`)
+# Ensure same version as kibi-internal (`nolookbehind`)
 
-When Siren Investigate starts, all UI code and their dependencies are optimised. If a plugin has a different version of a dependency than kibi-internal (or even, other plugins), the dependency can not be de-duplicated, so the UI bundle downloaded by the user is bigger.
-
-This rule ensures that if your repo lists a dependency used by kibi-internal, it must be the exact same version:
-
-```
-# eslint '**/*.{js,ts,jsx,tsx}' package.json
-
-/path/to/git/repo/package.json
-  0:5  warning  Investigate core uses 0.20.0, but this repo uses 0.17.1 of 'axios'     siren/same-core-dependency-version
-``` 
-
-Since version 2.1.0 this rule accepts an "ignore" option which allow to ignore a list of dependencies from the check 
-To configure the exclussion add the following to your .eslitrc.yml
-
-```
-rules:
-  siren/same-core-dependency-version: [ 'error', { ignore: ['dependencyName1', 'dependencyName2'] }]
-```
+This rule ensures that we do not use lookbehind as it is not supported by Safari
 
 
 Requirements:
