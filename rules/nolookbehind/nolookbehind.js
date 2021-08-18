@@ -5,45 +5,6 @@
 
  "use strict";
 
- /*
- const RegExpValidator = require("regexpp").RegExpValidator;
- const collector = new (class {
-     constructor() {
-         this._source = "";
-         this._controlChars = [];
-         this._validator = new RegExpValidator(this);
-     }
- 
-     onPatternEnter() {
-         this._controlChars = [];
-     }
- 
-     onCharacter(start, end, cp) {
-         if (cp >= 0x00 &&
-             cp <= 0x1F &&
-             (
-                 this._source.codePointAt(start) === cp ||
-                 this._source.slice(start, end).startsWith("\\x") ||
-                 this._source.slice(start, end).startsWith("\\u")
-             )
-         ) {
-             this._controlChars.push(`\\x${`0${cp.toString(16)}`.slice(-2)}`);
-         }
-     }
- 
-     collectControlChars(regexpStr) {
-         try {
-             this._source = regexpStr;
-             this._validator.validatePattern(regexpStr); // Call onCharacter hook
-         } catch (e) {
-             // Ignore syntax errors in RegExp.
-         }
-         return this._controlChars;
-     }
- })();
- 
- */
-
  //------------------------------------------------------------------------------
  // Rule Definition
  //------------------------------------------------------------------------------
@@ -94,8 +55,6 @@
              Literal(node) {
                  const pattern = getRegExpPattern(node);
  
-                 //console.log(pattern)
-
                  if (pattern && pattern.indexOf('?<=') > 0) {
                     context.report({
                         node,
