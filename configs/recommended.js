@@ -45,6 +45,7 @@ module.exports = {
     'eol-last': 'error',
     'import/no-default-export': 'off',
     'import/no-unresolved': ['error', { ignore: ['^ui/.*', '^plugins/.*', 'ng_mock'] }],
+    'import/order': 'error',
     'no-console': ['warn', { allow: ['warn', 'error'] }],
     'no-multi-spaces': 'error',
     'no-multiple-empty-lines': ['error', { max: 2, maxEOF: 0, maxBOF: 0 }],
@@ -88,6 +89,21 @@ module.exports = {
         '{tests,__tests__}/**/*.tsx'
       ],
       rules: typescriptRules
+    },
+    {
+      files: ['**/*.{js,jsx,ts,tsx}'],
+      rules: {
+        'import/order': [
+          2, // Required by plugin to work but overwritten by top level rules
+          {
+            groups: ['builtin', 'external', 'internal', 'parent', 'sibling', 'index', 'object'],
+            pathGroups: [
+              { pattern: '@*/*', group: 'external' }, // Scoped packages are not recognized as external without this
+            ],
+            'newlines-between': 'always'
+          }
+        ]
+      }
     }
   ],
   settings: {
