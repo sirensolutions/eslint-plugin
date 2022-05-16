@@ -45,6 +45,13 @@ module.exports = {
     'eol-last': 'error',
     'import/no-default-export': 'off',
     'import/no-unresolved': ['error', { ignore: ['^ui/.*', '^plugins/.*', 'ng_mock'] }],
+    'import/order': ['warn', {
+      groups: ['builtin', 'external', 'internal', 'parent', 'sibling', 'index'],
+      pathGroups: [
+        { pattern: '@*/*', group: 'external' }, // Scoped packages are not recognized as external without this
+      ],
+      'newlines-between': 'always-and-inside-groups'
+    }],
     'no-console': ['warn', { allow: ['warn', 'error'] }],
     'no-multi-spaces': 'error',
     'no-multiple-empty-lines': ['error', { max: 2, maxEOF: 0, maxBOF: 0 }],
