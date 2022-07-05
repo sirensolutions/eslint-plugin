@@ -1,6 +1,6 @@
 {
   "name": "eslint-plugin-siren",
-  "version": "2.3.3",
+  "version": "2.4.0",
   "description": "Provides custom eslint rules developed by Siren",
   "main": "index.js",
   "license": "SEE LICENSE IN LICENSE.md",
