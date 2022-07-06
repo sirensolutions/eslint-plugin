@@ -63,6 +63,7 @@ module.exports = {
     'react/display-name': 'off',
     'react/no-multi-comp': 'off',
     'react/prop-types': 'off',
+    'keyword-spacing': 'error',
     'siren/memory-leak': 'error',
     'siren/nolookbehind': 'error',
     'siren/same-core-dependency-version': 'error',
