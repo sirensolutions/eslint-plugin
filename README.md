@@ -12,29 +12,6 @@ To use the config:
    ```
    Where `<tag>` is the [latest tag available](https://github.com/sirensolutions/eslint-plugin/tags). 
 
-1. Install the peer dependencies
-   ```shell
-   npm install --save-dev \
-      eslint \
-      eslint-plugin-jest \
-      eslint-plugin-react \
-      eslint-plugin-react-hooks \
-      eslint-plugin-import \
-      eslint-plugin-mocha \
-      eslint-plugin-prefer-object-spread \
-      eslint-plugin-babel \
-      eslint-plugin-ban \
-      eslint-plugin-jsx-a11y \
-      eslint-plugin-no-unsanitized \
-      eslint-import-resolver-node \
-      babel-eslint \
-      sync-request \
-      typescript \
-      @typescript-eslint/eslint-plugin \
-      @typescript-eslint/parser
-   ```
-   When [eslint/eslint#13481](https://github.com/eslint/eslint/issues/13481) is complete, you will no longer have to install peer dependencies for ESLint configs, but for now it's a necessary evil.
-
 1. Update your `.eslintrc.yml` (or whatever you've called it) to extend from `plugin:siren/recommended`
    ```yaml
    extends: ['plugin:siren/recommended']
