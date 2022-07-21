@@ -18,8 +18,8 @@
   },
   "devDependencies": {
     "@typescript-eslint/parser": "^5.0.0",
-    "eslint": "^7.11.0",
-    "eslint-plugin-eslint-plugin": "^2.3.0",
+    "eslint": "^8.0.0",
+    "eslint-plugin-eslint-plugin": "^5.0.0",
     "husky": "^4.3.0",
     "jest": "^28.0.0",
     "typescript": ">=4.0.0"
