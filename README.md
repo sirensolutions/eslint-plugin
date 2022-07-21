@@ -12,6 +12,8 @@ To use the config:
    ```
    Where `<tag>` is the [latest tag available](https://github.com/sirensolutions/eslint-plugin/tags). 
 
+1. Add the peerDependencies of this plugin to the devDependencies of the project where you are using the plugin.
+
 1. Update your `.eslintrc.yml` (or whatever you've called it) to extend from `plugin:siren/recommended`
    ```yaml
    extends: ['plugin:siren/recommended']

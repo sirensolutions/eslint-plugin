@@ -17,19 +17,21 @@
     "test": "jest"
   },
   "devDependencies": {
+    "@typescript-eslint/parser": "^5.0.0",
+    "eslint": "^7.11.0",
     "eslint-plugin-eslint-plugin": "^2.3.0",
     "husky": "^4.3.0",
-    "jest": "^28.0.0"
+    "jest": "^28.0.0",
+    "typescript": ">=4.0.0"
   },
   "husky": {
     "hooks": {
       "pre-commit": "npm run lint && npm test"
     }
   },
-  "dependencies": {
+  "peerDependencies": {
     "@typescript-eslint/eslint-plugin": "^5.0.0",
     "@typescript-eslint/parser": "^5.0.0",
-    "eslint": "^7.11.0",
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-jest": "^24.1.0",
     "eslint-plugin-mocha": "^8.2.0",
