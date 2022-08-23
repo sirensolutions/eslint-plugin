@@ -110,7 +110,20 @@ ruleTester.run('promise-all', rule, {
         const types = await aclTypes.find();
         const response = await this._client.list(types);
       }`
-    }
+    },
+    {
+      name: 'arrow function expression',
+      code: `
+      const aclTypes = {};
+      async function main() {
+        const kibiNodes = await Promise.all(map(selectedNodes, async node => await dataModelHelper.graphNodeToKibiNode(node.getModel())));
+        const kibiCombos = await Promise.all(
+          map(selectedCombos, async combo => await dataModelHelper.graphComboToKibiNode(combo.getModel(kibiNodes)))
+        );
+      }`
+    },
+
+
   ],
   invalid: [
     {
@@ -215,5 +228,19 @@ ruleTester.run('promise-all', rule, {
       }`,
       errors
     },
+    {
+      name: 'arrow function expression',
+      code: `
+      const aclTypes = {};
+      async function main() {
+        const kibiNodes = await Promise.all(map(selectedNodes, async node => await dataModelHelper.graphNodeToKibiNode(node.getModel())));
+        const kibiCombos = await Promise.all(
+          map(selectedCombos, async combo => await dataModelHelper.graphComboToKibiNode(combo.getModel()))
+        );
+      }`,
+      errors
+    },
+
+
   ]
 });

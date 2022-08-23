@@ -115,11 +115,15 @@ function _addCallArgNames(node, arr) {
       }
     } else if (arg.type === 'ObjectExpression') {
       _addCallArgNames({ arguments: arg.properties }, arr);
-    } else if (arg.type === 'ArrowFunctionExpression' && arg.body && arg.body.type !== 'BlockStatement' && arg.body.arguments) {
-      _addCallArgNames(arg.body, arr);
-    } else if (arg.type === 'ArrowFunctionExpression' && arg.body && arg.body.type === 'BlockStatement' ) {
+    } else if (arg.type === 'ArrowFunctionExpression') {
+      if (arg.body && arg.body.type !== 'BlockStatement' && arg.body.arguments) {
+        _addCallArgNames(arg.body, arr);
+      } else if (arg.body && arg.body.type === 'BlockStatement') {
       // do nothing for now
       // TODO: handle case where it is a BlockStatement
+      } else if (arg.body && arg.body.type === 'AwaitExpression' && arg.body.argument && arg.body.argument.arguments ) {
+        _addCallArgNames(arg.body.argument, arr);
+      }
     } else if (arg.type === 'ArrayExpression') {
       _addCallArgNames({ arguments: arg.elements }, arr);
     } else if (arg.type === 'Property') {
