@@ -84,15 +84,20 @@ function getCallArgNames(node) {
 
 function _addCallArgNames(node, arr) {
   node.arguments.map(arg => {
-    // TODO handle complex case where argument is not a simple variable but a function
     if (arg.type === 'CallExpression') {
       return _addCallArgNames(arg, arr);
     } else if (arg.type === 'Identifier') {
       return arr.push(arg.name);
     } else if (arg.type === 'MemberExpression' && arg.object && arg.object.name && arg.property && arg.property.type === 'Identifier') {
       arr.push(arg.object.name + '.' + arg.property.name)
+    } else if (arg.type === 'ObjectExpression') {
+      _addCallArgNames({ arguments: arg.properties }, arr);
+    } else if (arg.type === 'Property') {
+      if (arg.value && arg.value.name) {
+        arr.push(arg.value.name)
+      }
     } else if (arg.type === 'Literal') {
-      // do nothing
+      // do nothing as this would be things like true, false, 'string', 5
     } else {
       throw new Error ('Not implemented for type: ' + arg.type)
     }

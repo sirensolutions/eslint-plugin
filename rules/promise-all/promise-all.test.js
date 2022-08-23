@@ -48,9 +48,17 @@ ruleTester.run('promise-all', rule, {
       async function getEntityNodes() {}
       const savedSearches = { get: async () => {}, getY: async () => {} };
       const $scope = {}
-      $scope.addMainSearchNode = async function (searchId) {
+      async function main(searchId) {
         const savedSearch = await savedSearches.get(searchId);
         const { coatNode, treeNode } = await getEntityNodes(savedSearch, EntityType.SAVED_SEARCH, true, iconService);
+      }`
+    },
+    {
+      name: 'this expression',
+      code: `
+      async function main() {
+        const savedRelation = await this._createRelationObject(relation);
+        const id = await savedRelation.save({ checkIfDuplicateExists: false, savedRelation });
       }`
     }
   ],
@@ -91,7 +99,17 @@ ruleTester.run('promise-all', rule, {
         const { coatNode, treeNode } = await getEntityNodes(EntityType.SAVED_SEARCH, true, iconService);
       }`,
       errors
+    },
+    {
+      name: 'this expression',
+      code: `
+      async function main() {
+        const savedRelation = await this._createRelationObject(relation);
+        const id = await savedRelation.save({ checkIfDuplicateExists: false });
+      }`,
+      errors
     }
+
 
   ]
 });
