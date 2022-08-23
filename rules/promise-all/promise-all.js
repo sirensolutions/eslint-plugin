@@ -40,10 +40,10 @@ function IdentifierChecker(context) {
         if (isLine(line)) {
           const previousLine = blockNode.body[i-1];
           if (isLine(previousLine)) {
-            const previousVariableName = getVariableName(previousLine);
+            const previousVariableNames = getVariableNames(previousLine);
             const currentCallArgNames = getCallArgNames(line.declarations[0].init.argument);
 
-            if (currentCallArgNames.length === 0 || !currentCallArgNames.includes(previousVariableName)) {
+            if (currentCallArgNames.length === 0 || !includeAtLeastOne(currentCallArgNames, previousVariableNames)) {
                 context.report({ node, message: 'Previous line is blocking the execution of this line use await Promise.all' });
             }
           }
@@ -52,6 +52,16 @@ function IdentifierChecker(context) {
       processedBlockNodes.push(blockNode)
     }
   };
+}
+
+function includeAtLeastOne(a, b) {
+  for (const namea of a) {
+    for (const nameb of b) {
+      if (namea === nameb) {
+        return true;
+      }
+    }
+  }
 }
 
 function isTestFile(context) {
@@ -72,8 +82,14 @@ if (
 }
 }
 
-function getVariableName(node) {
-  return node.declarations[0].id.name;
+function getVariableNames(node) {
+  const n = node.declarations[0].id;
+  if (n.type === 'Identifier') {
+    return [node.declarations[0].id.name];
+  } else if (n.type === 'ObjectPattern') {
+    return n.properties.map(p => p.key.name);
+  }
+  return [];
 }
 
 function getCallArgNames(node) {
@@ -85,15 +101,23 @@ function getCallArgNames(node) {
 function _addCallArgNames(node, arr) {
   node.arguments.map(arg => {
     if (arg.type === 'CallExpression') {
-      return _addCallArgNames(arg, arr);
+      _addCallArgNames(arg, arr);
+      if (arg.callee && arg.callee.type === 'MemberExpression' && arg.callee.object && arg.callee.object.arguments) {
+        _addCallArgNames(arg.callee.object, arr);
+      }
     } else if (arg.type === 'Identifier') {
-      return arr.push(arg.name);
+      arr.push(arg.name);
     } else if (arg.type === 'MemberExpression' && arg.object && arg.object.name && arg.property && arg.property.type === 'Identifier') {
       arr.push(arg.object.name + '.' + arg.property.name)
     } else if (arg.type === 'ObjectExpression') {
       _addCallArgNames({ arguments: arg.properties }, arr);
-    } else if (arg.type === 'ArrowFunctionExpression' && arg.params) {
+    } else if (arg.type === 'ArrowFunctionExpression' && arg.body && arg.body.type !== 'BlockStatement' && arg.body.arguments) {
       _addCallArgNames(arg.body, arr);
+    } else if (arg.type === 'ArrowFunctionExpression' && arg.body && arg.body.type === 'BlockStatement' ) {
+      // do nothing for now
+      // TODO: handle case where it is a BlockStatement
+    } else if (arg.type === 'ArrayExpression') {
+      _addCallArgNames({ arguments: arg.elements }, arr);
     } else if (arg.type === 'Property') {
       if (arg.value && arg.value.name) {
         arr.push(arg.value.name)

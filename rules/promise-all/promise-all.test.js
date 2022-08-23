@@ -80,6 +80,27 @@ ruleTester.run('promise-all', rule, {
         const x = await getX();
         const results = await Promise.all(o.map(d => processX(x)));
       }`
+    },
+    {
+      name: '.map after promise',
+      code: `
+      const model = {};
+      const esOptions = {};
+      function normalizeEsDoc() {};
+      function wrapSearch() {};
+      function get() {};
+
+      async function main() {
+        const { response, zzz } = await model.search(esOptions.size, esOptions, req, ignoreBroken, namespaceFilter);
+        const savedObjects = await Promise.all(get(response, 'hits.hits', [zzz])
+          .map(async (hit) => {
+            const doc = normalizeEsDoc(hit);
+            if (type === 'search') {
+              await wrapSearch.call(this, doc, req);
+            }
+            return doc;
+          }));
+      }`
     }
   ],
   invalid: [
@@ -150,7 +171,31 @@ ruleTester.run('promise-all', rule, {
         const results = await Promise.all(o.map(d => process()));
       }`,
       errors
+    },
+    {
+      name: '.map after promise',
+      code: `
+      const response = '';
+      const model = {};
+      const esOptions = {};
+      function normalizeEsDoc() {};
+      function wrapSearch() {};
+      function get() {};
+
+      async function main() {
+        const { zzz } = await model.search(esOptions.size, esOptions, req, ignoreBroken, namespaceFilter);
+        const savedObjects = await Promise.all(get(response, 'hits.hits', [])
+          .map(async (hit) => {
+            const doc = normalizeEsDoc(hit);
+            if (type === 'search') {
+              await wrapSearch.call(this, doc, req);
+            }
+            return doc;
+          }));
+      }`,
+      errors
     }
+
 
 
 
