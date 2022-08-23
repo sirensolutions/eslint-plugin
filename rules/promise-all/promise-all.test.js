@@ -37,6 +37,21 @@ ruleTester.run('promise-all', rule, {
         const x = await getX();
         const y = await getY(processX(x));
       }`
+    },
+    {
+      name: 'object with methods method + many arguments',
+      code: `
+      const EntityType = {
+        SAVED_SEARCH: 'savedSearch'
+      };
+      const iconService = {};
+      async function getEntityNodes() {}
+      const savedSearches = { get: async () => {}, getY: async () => {} };
+      const $scope = {}
+      $scope.addMainSearchNode = async function (searchId) {
+        const savedSearch = await savedSearches.get(searchId);
+        const { coatNode, treeNode } = await getEntityNodes(savedSearch, EntityType.SAVED_SEARCH, true, iconService);
+      }`
     }
   ],
   invalid: [
@@ -60,6 +75,23 @@ ruleTester.run('promise-all', rule, {
         const y = await getY(processX());
       }`,
       errors
+    },
+    {
+      name: 'object with methods method + many arguments',
+      code: `
+      const EntityType = {
+        SAVED_SEARCH: 'savedSearch'
+      };
+      const iconService = {};
+      async function getEntityNodes() {}
+      const savedSearches = { get: async () => {}, getY: async () => {} };
+      const $scope = {}
+      $scope.addMainSearchNode = async function (searchId) {
+        const savedSearch = await savedSearches.get(searchId);
+        const { coatNode, treeNode } = await getEntityNodes(EntityType.SAVED_SEARCH, true, iconService);
+      }`,
+      errors
     }
+
   ]
 });

@@ -65,7 +65,7 @@ function isLine(node) {
 if (
     node.type === 'VariableDeclaration' &&
     node.declarations && node.declarations.length === 1 && node.declarations[0].type === 'VariableDeclarator' &&
-    node.declarations[0].init.type === 'AwaitExpression' &&
+    node.declarations[0].init && node.declarations[0].init.type === 'AwaitExpression' &&
     node.declarations[0].init.argument && node.declarations[0].init.argument.type === 'CallExpression'
 ) {
     return true;
@@ -89,7 +89,12 @@ function _addCallArgNames(node, arr) {
       return _addCallArgNames(arg, arr);
     } else if (arg.type === 'Identifier') {
       return arr.push(arg.name);
+    } else if (arg.type === 'MemberExpression' && arg.object && arg.object.name && arg.property && arg.property.type === 'Identifier') {
+      arr.push(arg.object.name + '.' + arg.property.name)
+    } else if (arg.type === 'Literal') {
+      // do nothing
+    } else {
+      throw new Error ('Not implemented for type: ' + arg.type)
     }
-    throw new Error ('Not implemented')
   });
 }
