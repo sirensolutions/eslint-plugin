@@ -60,6 +60,26 @@ ruleTester.run('promise-all', rule, {
         const savedRelation = await this._createRelationObject(relation);
         const id = await savedRelation.save({ checkIfDuplicateExists: false, savedRelation });
       }`
+    },
+    {
+      name: 'arrow function expression',
+      code: `
+      const o = [];
+      function processX () {};
+      async function main() {
+        const x = await getX();
+        const results = await o.map(d => processX(x));
+      }`
+    },
+    {
+      name: 'arrow function expression wrapped in Promise.all',
+      code: `
+      const o = [];
+      function processX () {};
+      async function main() {
+        const x = await getX();
+        const results = await Promise.all(o.map(d => processX(x)));
+      }`
     }
   ],
   invalid: [
@@ -108,7 +128,30 @@ ruleTester.run('promise-all', rule, {
         const id = await savedRelation.save({ checkIfDuplicateExists: false });
       }`,
       errors
+    },
+    {
+      name: 'arrow function expression',
+      code: `
+      const o = [];
+      function process () {};
+      async function main() {
+        const x = await getX();
+        const results = await o.map(d => process());
+      }`,
+      errors
+    },
+    {
+      name: 'arrow function expression - wrapped in Promise.all',
+      code: `
+      const o = [];
+      function process () {};
+      async function main() {
+        const x = await getX();
+        const results = await Promise.all(o.map(d => process()));
+      }`,
+      errors
     }
+
 
 
   ]

@@ -92,6 +92,8 @@ function _addCallArgNames(node, arr) {
       arr.push(arg.object.name + '.' + arg.property.name)
     } else if (arg.type === 'ObjectExpression') {
       _addCallArgNames({ arguments: arg.properties }, arr);
+    } else if (arg.type === 'ArrowFunctionExpression' && arg.params) {
+      _addCallArgNames(arg.body, arr);
     } else if (arg.type === 'Property') {
       if (arg.value && arg.value.name) {
         arr.push(arg.value.name)
