@@ -101,6 +101,15 @@ ruleTester.run('promise-all', rule, {
             return doc;
           }));
       }`
+    },
+    {
+      name: 'this',
+      code: `
+      const aclTypes = {};
+      async function main() {
+        const types = await aclTypes.find();
+        const response = await this._client.list(types);
+      }`
     }
   ],
   invalid: [
@@ -194,10 +203,17 @@ ruleTester.run('promise-all', rule, {
           }));
       }`,
       errors
-    }
+    },
+    {
+      name: 'this',
+      code: `
+      const aclTypes = {};
 
-
-
-
+      async function main() {
+        const types = await aclTypes.find();
+        const response = await this._client.list(this._id);
+      }`,
+      errors
+    },
   ]
 });

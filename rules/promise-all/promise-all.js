@@ -107,8 +107,12 @@ function _addCallArgNames(node, arr) {
       }
     } else if (arg.type === 'Identifier') {
       arr.push(arg.name);
-    } else if (arg.type === 'MemberExpression' && arg.object && arg.object.name && arg.property && arg.property.type === 'Identifier') {
-      arr.push(arg.object.name + '.' + arg.property.name)
+    } else if (arg.type === 'MemberExpression') {
+      if (arg.object && arg.object.name && arg.property && arg.property.type === 'Identifier') {
+        arr.push(arg.object.name + '.' + arg.property.name);
+      } else if (arg.object && arg.object.type === 'ThisExpression' && arg.property && arg.type === 'Identifier' ) {
+        arr.push('this.' + arg.property.name);
+      }
     } else if (arg.type === 'ObjectExpression') {
       _addCallArgNames({ arguments: arg.properties }, arr);
     } else if (arg.type === 'ArrowFunctionExpression' && arg.body && arg.body.type !== 'BlockStatement' && arg.body.arguments) {
