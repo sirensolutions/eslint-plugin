@@ -4,6 +4,20 @@ const rule = require('./promise-all');
 const ruleTester = new RuleTester({ parserOptions: { ecmaVersion: 8 } });
 const errors = [{ message: 'Previous line is blocking the execution of this line use await Promise.all' }];
 
+// ruleTester.run('promise-all', rule, {
+//   valid: [
+//     {
+//       name: 'use method from first variable in arguments',
+//       code: `
+//       async function main() {
+//         const replicatedObjects = await this._replicateSavedObjects();
+//         const esResponse = await this.bulkCreate(replicatedObjects.bulkBody);      }`
+//     }
+//   ],
+//   invalid: []
+// });
+
+
 ruleTester.run('promise-all', rule, {
   valid: [
     {
@@ -122,8 +136,22 @@ ruleTester.run('promise-all', rule, {
         );
       }`
     },
-
-
+    {
+      name: 'use method from first variable',
+      code: `
+      async function getX() {}
+      async function main() {
+        const x = await getX();
+        const y = await x.getY();
+      }`
+    },
+    {
+      name: 'use method from variable in arguments',
+      code: `
+      async function main() {
+        const replicatedObjects = await this._replicateSavedObjects();
+        const esResponse = await this.bulkCreate(replicatedObjects.bulkBody);      }`
+    }
   ],
   invalid: [
     {
@@ -167,8 +195,8 @@ ruleTester.run('promise-all', rule, {
       name: 'this expression',
       code: `
       async function main() {
-        const savedRelation = await this._createRelationObject(relation);
-        const id = await savedRelation.save({ checkIfDuplicateExists: false });
+        const x = await this._createRelationObject(relation);
+        const id = await y.save({ checkIfDuplicateExists: false });
       }`,
       errors
     },
