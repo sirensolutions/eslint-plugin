@@ -7,11 +7,15 @@ const errors = [{ message: 'Previous line is blocking the execution of this line
 // ruleTester.run('promise-all', rule, {
 //   valid: [
 //     {
-//       name: 'use method from first variable in arguments',
+//       name: 'detect that the variable is used in string template',
 //       code: `
 //       async function main() {
-//         const { saved_objects: x } = await getX();
-//         const results = await Promise.all(x.map(d => collectPanels(savedObjectsClient, d)));
+//         const response = await getX();
+//         const user = await this._server.plugins.investigate_access_control.authenticate({
+//           ` +
+//           "value: `Bearer ${response.access_token}`" +
+//           `
+//         });
 //       }`
 //     }
 //   ],
@@ -160,6 +164,18 @@ ruleTester.run('promise-all', rule, {
         const { saved_objects: savedObjects } = await getX();
         const results = await Promise.all(savedObjects.map(d => collectPanels(savedObjectsClient, d)));
       }`
+    },
+    {
+      name: 'detect that the variable is used in string template',
+      code: `
+      async function main() {
+        const response = await getX();
+        const user = await this._server.plugins.investigate_access_control.authenticate({
+          ` +
+          "value: `Bearer ${response.access_token}`" +
+          `
+        });
+      }`
     }
   ],
   invalid: [
@@ -277,7 +293,18 @@ ruleTester.run('promise-all', rule, {
       }`,
       errors
     },
-
-
+    {
+      name: 'detect that the variable is used in string template',
+      code: `
+      async function main() {
+        const x = await getX();
+        const user = await this._server.plugins.investigate_access_control.authenticate({
+          ` +
+          "value: `Bearer ${response.access_token}`" +
+          `
+        });
+      }`,
+      errors
+    }
   ]
 });
