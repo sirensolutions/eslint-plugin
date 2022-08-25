@@ -10,8 +10,9 @@ const errors = [{ message: 'Previous line is blocking the execution of this line
 //       name: 'use method from first variable in arguments',
 //       code: `
 //       async function main() {
-//         const replicatedObjects = await this._replicateSavedObjects();
-//         const esResponse = await this.bulkCreate(replicatedObjects.bulkBody);      }`
+//         const { saved_objects: x } = await getX();
+//         const results = await Promise.all(x.map(d => collectPanels(savedObjectsClient, d)));
+//       }`
 //     }
 //   ],
 //   invalid: []
@@ -151,6 +152,14 @@ ruleTester.run('promise-all', rule, {
       async function main() {
         const replicatedObjects = await this._replicateSavedObjects();
         const esResponse = await this.bulkCreate(replicatedObjects.bulkBody);      }`
+    },
+    {
+      name: 'rename spread variable to camelCase',
+      code: `
+      async function main() {
+        const { saved_objects: savedObjects } = await getX();
+        const results = await Promise.all(savedObjects.map(d => collectPanels(savedObjectsClient, d)));
+      }`
     }
   ],
   invalid: [

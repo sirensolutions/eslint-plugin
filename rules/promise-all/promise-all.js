@@ -40,7 +40,7 @@ function IdentifierChecker(context) {
         if (isLine(line)) {
           const previousLine = blockNode.body[i-1];
           if (isLine(previousLine)) {
-            const previousVariableNames = getVariableNames(previousLine);
+            const previousVariableNames = getVariableNames(context, previousLine);
             const currentCallArgNames = getCallArgNames(line.declarations[0].init.argument);
 
             if (currentCallArgNames.length === 0 || !includeAtLeastOne(currentCallArgNames, previousVariableNames)) {
@@ -83,17 +83,9 @@ function isLine(node) {
 }
 
 
-// TODO: use context.getDeclaredVariables(
-  // node.getVariableNames method to make sure we are getting good names
-
-function getVariableNames(node) {
-  const n = node.declarations[0].id;
-  if (n.type === 'Identifier') {
-    return [node.declarations[0].id.name];
-  } else if (n.type === 'ObjectPattern') {
-    return n.properties.map(p => p.key.name);
-  }
-  return [];
+function getVariableNames(context, node) {
+  const vars = context.getDeclaredVariables(node)
+  return vars.map(v => v.name);
 }
 
 function getCallArgNames(node) {
