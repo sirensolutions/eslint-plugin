@@ -1,29 +1,10 @@
 const { RuleTester } = require('eslint');
-const rule = require('./promise-all');
+const rule = require('./no-double-await');
 
 const ruleTester = new RuleTester({ parserOptions: { ecmaVersion: 8 } });
 const errors = [{ message: 'Previous line is blocking the execution of this line use await Promise.all' }];
 
-// ruleTester.run('promise-all', rule, {
-//   valid: [
-//     {
-//       name: 'detect that the variable is used in string template',
-//       code: `
-//       async function main() {
-//         const response = await getX();
-//         const user = await this._server.plugins.investigate_access_control.authenticate({
-//           ` +
-//           "value: `Bearer ${response.access_token}`" +
-//           `
-//         });
-//       }`
-//     }
-//   ],
-//   invalid: []
-// });
-
-
-ruleTester.run('promise-all', rule, {
+ruleTester.run('no-double-await', rule, {
   valid: [
     {
       name: 'not related',

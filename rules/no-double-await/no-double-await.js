@@ -5,7 +5,7 @@ module.exports = {
       description: 'Detect blocking two lines of await where former is possibly blocking the later',
       category: 'Best Practices',
       recommended: true,
-      url: 'https://github.com/sirensolutions/eslint-plugin/blob/master/rules/promise-all/promise-all.md'
+      url: 'https://github.com/sirensolutions/eslint-plugin/blob/master/rules/no-double-await/no-double-await.md'
     },
     schema: [] // no options
   },
@@ -30,7 +30,7 @@ function IdentifierChecker(context) {
       node.parent.parent && node.parent.parent.type === 'VariableDeclaration' &&
       node.parent.parent.parent && node.parent.parent.parent.type === 'BlockStatement'
     ) {
-    // get the parent BlockStatement to see if there are at least two
+      // get the parent BlockStatement to see if there are at least two
       const blockNode = node.parent.parent.parent
       if (processedBlockNodes.includes(blockNode)) {
         return;
@@ -65,7 +65,7 @@ function includeAtLeastOne(a, b) {
 }
 
 function isTestFile(context) {
-  const testFileNameRegex = /\.test\.|__tests__|test\/functional|tasks|functional_test_runner|junit_report_generation|core_plugins\/console\/public|gulpfile\.js/g;
+  const testFileNameRegex = /\.test\.|__tests__|test\/functional/g;
   return testFileNameRegex.test(context.getFilename());
 }
 
