@@ -1,3 +1,5 @@
+const createHash = require('./create_hash');
+
 module.exports = {
   meta: {
     type: 'problem',
@@ -14,7 +16,15 @@ module.exports = {
   })
 };
 
-const  processedBlockNodes = [];
+// Note:
+// here we will store all processed block nodes
+// we can NOT store the whole nodes as this would be memory heavy
+// on Investigate source code it can add 1.5GB during eslint execution
+// Unfortunately we can not simply mark the node with some temp variable as eslint does not allow any
+// modification of the AST by rule implementation
+// The only solution is to compute a hash of each node
+// and use hashes to check if the node was already processed or not
+const  processedBlockNodes = {};
 
 function IdentifierChecker(context) {
   return node => {
@@ -30,11 +40,15 @@ function IdentifierChecker(context) {
       node.parent.parent && node.parent.parent.type === 'VariableDeclaration' &&
       node.parent.parent.parent && node.parent.parent.parent.type === 'BlockStatement'
     ) {
-      // get the parent BlockStatement to see if there are at least two
       const blockNode = node.parent.parent.parent
-      if (processedBlockNodes.includes(blockNode)) {
+      const blockNodeHash = createHash(blockNode);
+      if (processedBlockNodes[blockNodeHash]) {
         return;
       }
+      if (blockNode.body.length < 2) {
+        return
+      }
+
       for (let i = 1; i < blockNode.body.length; i++) {
         const line = blockNode.body[i];
         if (isLine(line)) {
@@ -49,15 +63,15 @@ function IdentifierChecker(context) {
           }
         }
       }
-      processedBlockNodes.push(blockNode)
+      processedBlockNodes[blockNodeHash] = true;
     }
   };
 }
 
 function includeAtLeastOne(a, b) {
-  for (const namea of a) {
-    for (const nameb of b) {
-      if (namea === nameb) {
+  for (const nameA of a) {
+    for (const nameB of b) {
+      if (nameA === nameB) {
         return true;
       }
     }
@@ -81,7 +95,6 @@ function isLine(node) {
     return true;
   }
 }
-
 
 function getVariableNames(context, node) {
   const vars = context.getDeclaredVariables(node)

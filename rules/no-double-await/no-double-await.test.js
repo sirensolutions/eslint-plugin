@@ -12,8 +12,7 @@ ruleTester.run('no-double-await', rule, {
     },
     {
       name: 'no await',
-      code: `function getX() {};
-      function getY() {};
+      code: `
       function main() {
         const x = getX();
         const y = getY(x);
@@ -21,8 +20,7 @@ ruleTester.run('no-double-await', rule, {
     },
     {
       name: 'second line arg as variable',
-      code: `async function getX() {};
-      async function getY() {};
+      code: `
       async function main() {
         const x = await getX();
         const y = await getY(x);
@@ -30,9 +28,7 @@ ruleTester.run('no-double-await', rule, {
     },
     {
       name: 'second line arg wrapped in function',
-      code: `async function getX() {};
-      async function getY() {};
-      function processX() {};
+      code: `
       async function main() {
         const x = await getX();
         const y = await getY(processX(x));
@@ -41,13 +37,6 @@ ruleTester.run('no-double-await', rule, {
     {
       name: 'object with methods method + many arguments',
       code: `
-      const EntityType = {
-        SAVED_SEARCH: 'savedSearch'
-      };
-      const iconService = {};
-      async function getEntityNodes() {}
-      const savedSearches = { get: async () => {}, getY: async () => {} };
-      const $scope = {}
       async function main(searchId) {
         const savedSearch = await savedSearches.get(searchId);
         const { coatNode, treeNode } = await getEntityNodes(savedSearch, EntityType.SAVED_SEARCH, true, iconService);
@@ -64,8 +53,6 @@ ruleTester.run('no-double-await', rule, {
     {
       name: 'arrow function expression',
       code: `
-      const o = [];
-      function processX () {};
       async function main() {
         const x = await getX();
         const results = await o.map(d => processX(x));
@@ -74,8 +61,6 @@ ruleTester.run('no-double-await', rule, {
     {
       name: 'arrow function expression wrapped in Promise.all',
       code: `
-      const o = [];
-      function processX () {};
       async function main() {
         const x = await getX();
         const results = await Promise.all(o.map(d => processX(x)));
@@ -84,12 +69,6 @@ ruleTester.run('no-double-await', rule, {
     {
       name: '.map after promise',
       code: `
-      const model = {};
-      const esOptions = {};
-      function normalizeEsDoc() {};
-      function wrapSearch() {};
-      function get() {};
-
       async function main() {
         const { response, zzz } = await model.search(esOptions.size, esOptions, req, ignoreBroken, namespaceFilter);
         const savedObjects = await Promise.all(get(response, 'hits.hits', [zzz])
@@ -105,7 +84,6 @@ ruleTester.run('no-double-await', rule, {
     {
       name: 'this',
       code: `
-      const aclTypes = {};
       async function main() {
         const types = await aclTypes.find();
         const response = await this._client.list(types);
@@ -114,7 +92,6 @@ ruleTester.run('no-double-await', rule, {
     {
       name: 'arrow function expression',
       code: `
-      const aclTypes = {};
       async function main() {
         const kibiNodes = await Promise.all(map(selectedNodes, async node => await dataModelHelper.graphNodeToKibiNode(node.getModel())));
         const kibiCombos = await Promise.all(
@@ -125,7 +102,6 @@ ruleTester.run('no-double-await', rule, {
     {
       name: 'use method from first variable',
       code: `
-      async function getX() {}
       async function main() {
         const x = await getX();
         const y = await x.getY();
@@ -162,8 +138,7 @@ ruleTester.run('no-double-await', rule, {
   invalid: [
     {
       name: 'second line arg as variable',
-      code : `async function getX() {};
-      async function getY() {};
+      code : `
       async function main() {
         const x = await getX();
         const y = await getY();
@@ -172,9 +147,7 @@ ruleTester.run('no-double-await', rule, {
     },
     {
       name: 'second line arg wrapped in function',
-      code: `async function getX() {};
-      async function getY() {};
-      function processX() {};
+      code: `
       async function main() {
         const x = await getX();
         const y = await getY(processX());
@@ -184,13 +157,6 @@ ruleTester.run('no-double-await', rule, {
     {
       name: 'object with methods method + many arguments',
       code: `
-      const EntityType = {
-        SAVED_SEARCH: 'savedSearch'
-      };
-      const iconService = {};
-      async function getEntityNodes() {}
-      const savedSearches = { get: async () => {}, getY: async () => {} };
-      const $scope = {}
       $scope.addMainSearchNode = async function (searchId) {
         const savedSearch = await savedSearches.get(searchId);
         const { coatNode, treeNode } = await getEntityNodes(EntityType.SAVED_SEARCH, true, iconService);
@@ -209,8 +175,6 @@ ruleTester.run('no-double-await', rule, {
     {
       name: 'arrow function expression',
       code: `
-      const o = [];
-      function process () {};
       async function main() {
         const x = await getX();
         const results = await o.map(d => process());
@@ -220,8 +184,6 @@ ruleTester.run('no-double-await', rule, {
     {
       name: 'arrow function expression - wrapped in Promise.all',
       code: `
-      const o = [];
-      function process () {};
       async function main() {
         const x = await getX();
         const results = await Promise.all(o.map(d => process()));
@@ -231,13 +193,6 @@ ruleTester.run('no-double-await', rule, {
     {
       name: '.map after promise',
       code: `
-      const response = '';
-      const model = {};
-      const esOptions = {};
-      function normalizeEsDoc() {};
-      function wrapSearch() {};
-      function get() {};
-
       async function main() {
         const { zzz } = await model.search(esOptions.size, esOptions, req, ignoreBroken, namespaceFilter);
         const savedObjects = await Promise.all(get(response, 'hits.hits', [])
@@ -254,8 +209,6 @@ ruleTester.run('no-double-await', rule, {
     {
       name: 'this',
       code: `
-      const aclTypes = {};
-
       async function main() {
         const types = await aclTypes.find();
         const response = await this._client.list(this._id);
@@ -265,7 +218,6 @@ ruleTester.run('no-double-await', rule, {
     {
       name: 'arrow function expression',
       code: `
-      const aclTypes = {};
       async function main() {
         const kibiNodes = await Promise.all(map(selectedNodes, async node => await dataModelHelper.graphNodeToKibiNode(node.getModel())));
         const kibiCombos = await Promise.all(
