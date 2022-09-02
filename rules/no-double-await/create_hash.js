@@ -1,4 +1,4 @@
-const Sha256 = require('./sha256');
+const crypto = require('crypto');
 
 const getCircularReplacer = () => {
   const seen = new WeakSet(); // eslint-disable-line no-undef
@@ -15,7 +15,7 @@ const getCircularReplacer = () => {
 
 function createHash(node) {
   const nodeString = JSON.stringify(node, getCircularReplacer());
-  return new Sha256().update(nodeString, 'utf8').digest('hex');
+  return crypto.createHash('sha256').update(nodeString).digest('hex');
 }
 
 module.exports = createHash;
