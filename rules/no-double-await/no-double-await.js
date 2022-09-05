@@ -32,10 +32,17 @@ function IdentifierChecker(context) {
       return;
     }
 
-    const condition1 = node.parent.init && node.parent.init.type === 'AwaitExpression' &&
+    const conditionCommon = node.type === 'Identifier' &&
+    node.parent && node.parent.type === 'VariableDeclarator' &&
+    node.parent.parent && node.parent.parent.type === 'VariableDeclaration' &&
+    node.parent.parent.parent && node.parent.parent.parent.type === 'BlockStatement'
+
+    const condition1 = conditionCommon &&
+    node.parent.init && node.parent.init.type === 'AwaitExpression' &&
     node.parent.init.argument && node.parent.init.argument.type === 'CallExpression'
 
-    const condition2 = node.parent.init && node.parent.init.type === 'ConditionalExpression' &&
+    const condition2 = conditionCommon &&
+    node.parent.init && node.parent.init.type === 'ConditionalExpression' &&
     (
       (
         node.parent.init.consequent.type === 'AwaitExpression' &&
@@ -47,10 +54,6 @@ function IdentifierChecker(context) {
       )
     );
 
-    const conditionCommon = node.type === 'Identifier' &&
-    node.parent && node.parent.type === 'VariableDeclarator' &&
-    node.parent.parent && node.parent.parent.type === 'VariableDeclaration' &&
-    node.parent.parent.parent && node.parent.parent.parent.type === 'BlockStatement'
 
     if (conditionCommon && (condition1 || condition2)) {
       const blockNode = node.parent.parent.parent;
@@ -102,11 +105,11 @@ function isLine(node) {
   const commonCondition = node.type === 'VariableDeclaration' &&
   node.declarations && node.declarations.length === 1 && node.declarations[0].type === 'VariableDeclarator';
 
-  const condition1 =
+  const condition1 = commonCondition &&
   node.declarations[0].init && node.declarations[0].init.type === 'AwaitExpression' &&
   node.declarations[0].init.argument && node.declarations[0].init.argument.type === 'CallExpression'
 
-  const condition2 =
+  const condition2 = commonCondition &&
   node.declarations[0].init && node.declarations[0].init.type === 'ConditionalExpression' &&
   (
     (
@@ -118,7 +121,7 @@ function isLine(node) {
     )
   );
 
-  return commonCondition && (condition1 || condition2);
+  return condition1 || condition2;
 }
 
 function getVariableNames(context, node) {
