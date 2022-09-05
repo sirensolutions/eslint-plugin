@@ -133,7 +133,15 @@ ruleTester.run('no-double-await', rule, {
           `
         });
       }`
-    }
+    },
+    {
+      name: 'ternary operators',
+      code: `
+      async function main() {
+        const x = this.state.includeSnapshot ? await getX() : undefined;
+        const y = this.state.includeData ? await getY(x) : undefined;
+      }`
+    },
   ],
   invalid: [
     {
@@ -238,6 +246,15 @@ ruleTester.run('no-double-await', rule, {
         });
       }`,
       errors
-    }
+    },
+    {
+      name: 'ternary operators',
+      code: `
+      async function main() {
+        const x = this.state.includeSnapshot ? await getX() : undefined;
+        const y = this.state.includeData ? await getY() : undefined;
+      }`,
+      errors
+    },
   ]
 });

@@ -32,14 +32,27 @@ function IdentifierChecker(context) {
       return;
     }
 
-    if (
-      node.type === 'Identifier' &&
-      node.parent && node.parent.type === 'VariableDeclarator' &&
-      node.parent.init && node.parent.init.type === 'AwaitExpression' &&
-      node.parent.init.argument && node.parent.init.argument.type === 'CallExpression' &&
-      node.parent.parent && node.parent.parent.type === 'VariableDeclaration' &&
-      node.parent.parent.parent && node.parent.parent.parent.type === 'BlockStatement'
-    ) {
+    const condition1 = node.parent.init && node.parent.init.type === 'AwaitExpression' &&
+    node.parent.init.argument && node.parent.init.argument.type === 'CallExpression'
+
+    const condition2 = node.parent.init && node.parent.init.type === 'ConditionalExpression' &&
+    (
+      (
+        node.parent.init.consequent.type === 'AwaitExpression' &&
+        node.parent.init.consequent.argument && node.parent.init.consequent.argument.type === 'CallExpression'
+      ) ||
+      (
+        node.parent.init.alternate.type === 'AwaitExpression' &&
+        node.parent.init.alternate.argument && node.parent.init.alternate.argument.type === 'CallExpression'
+      )
+    );
+
+    const conditionCommon = node.type === 'Identifier' &&
+    node.parent && node.parent.type === 'VariableDeclarator' &&
+    node.parent.parent && node.parent.parent.type === 'VariableDeclaration' &&
+    node.parent.parent.parent && node.parent.parent.parent.type === 'BlockStatement'
+
+    if (conditionCommon && (condition1 || condition2)) {
       const blockNode = node.parent.parent.parent;
       const blockNodeHash = createHash(blockNode);
       if (processedBlockNodes[blockNodeHash]) {
@@ -55,7 +68,7 @@ function IdentifierChecker(context) {
           const previousLine = blockNode.body[i-1];
           if (isLine(previousLine)) {
             const previousVariableNames = getVariableNames(context, previousLine);
-            const currentCallArgNames = getCallArgNames(context, line.declarations[0].init.argument);
+            const currentCallArgNames = getCallArgNames(context, line.declarations[0].init);
 
             if (currentCallArgNames.length === 0 || !includeAtLeastOne(currentCallArgNames, previousVariableNames)) {
                 context.report({ node, message: 'Previous line is blocking the execution of this line use await Promise.all' });
@@ -86,14 +99,26 @@ function isTestFile(context) {
 ///////////////////////////// NODE CONDITIONALS /////////////////////////////
 
 function isLine(node) {
-  if (
-    node.type === 'VariableDeclaration' &&
-    node.declarations && node.declarations.length === 1 && node.declarations[0].type === 'VariableDeclarator' &&
-    node.declarations[0].init && node.declarations[0].init.type === 'AwaitExpression' &&
-    node.declarations[0].init.argument && node.declarations[0].init.argument.type === 'CallExpression'
-  ) {
-    return true;
-  }
+  const commonCondition = node.type === 'VariableDeclaration' &&
+  node.declarations && node.declarations.length === 1 && node.declarations[0].type === 'VariableDeclarator';
+
+  const condition1 =
+  node.declarations[0].init && node.declarations[0].init.type === 'AwaitExpression' &&
+  node.declarations[0].init.argument && node.declarations[0].init.argument.type === 'CallExpression'
+
+  const condition2 =
+  node.declarations[0].init && node.declarations[0].init.type === 'ConditionalExpression' &&
+  (
+    (
+      node.declarations[0].init.consequent.type === 'AwaitExpression' &&
+      node.declarations[0].init.consequent.argument && node.declarations[0].init.consequent.argument.type === 'CallExpression'
+    ) || (
+      node.declarations[0].init.alternate.type === 'AwaitExpression' &&
+      node.declarations[0].init.alternate.argument && node.declarations[0].init.alternate.argument.type === 'CallExpression'
+    )
+  );
+
+  return commonCondition && (condition1 || condition2);
 }
 
 function getVariableNames(context, node) {
@@ -103,7 +128,16 @@ function getVariableNames(context, node) {
 
 function getCallArgNames(context, node) {
   const arr = [];
-  _addCallArgNames(context, [node], arr);
+  if (node.argument) {
+    _addCallArgNames(context, [node.argument], arr);
+  } else {
+    if (node.consequent.argument) {
+      _addCallArgNames(context, [node.consequent.argument], arr);
+    }
+    if (node.alternate.argument) {
+      _addCallArgNames(context, [node.alternate.argument], arr);
+    }
+  }
   return arr;
 }
 
