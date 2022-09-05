@@ -46,7 +46,7 @@ function IdentifierChecker(context) {
         return;
       }
       if (blockNode.body.length < 2) {
-        return
+        return;
       }
 
       for (let i = 1; i < blockNode.body.length; i++) {
@@ -131,8 +131,7 @@ function _addCallArgNames(context, nodes, arr) {
       if (node.body && node.body.type !== 'BlockStatement' && node.body.arguments) {
         _addCallArgNames(context, node.body.arguments, arr);
       } else if (node.body && node.body.type === 'BlockStatement') {
-      // do nothing for now
-      // TODO: handle case where it is a BlockStatement
+        // TODO: in future we might want to handle case where it is a BlockStatement - do nothing for now
       } else if (node.body && node.body.type === 'AwaitExpression' && node.body.argument && node.body.argument.arguments ) {
         _addCallArgNames(context, node.body.argument.arguments, arr);
       }
@@ -147,7 +146,8 @@ function _addCallArgNames(context, nodes, arr) {
     } else if (node.type === 'TemplateLiteral' && node.expressions) {
       _addCallArgNames(context, node.expressions, arr);
     } else if (node.type === 'Literal' || node.type === 'ThisExpression') {
-      // do nothing as this would be things like true, false, 'string', 5
+      // Note:
+      // do nothing as this would be things like true, false, 'string', 5, or this
     } else {
       throw new Error ('Not implemented for type: ' + node.type)
     }
