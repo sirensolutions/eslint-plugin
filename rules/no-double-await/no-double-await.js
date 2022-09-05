@@ -40,7 +40,7 @@ function IdentifierChecker(context) {
       node.parent.parent && node.parent.parent.type === 'VariableDeclaration' &&
       node.parent.parent.parent && node.parent.parent.parent.type === 'BlockStatement'
     ) {
-      const blockNode = node.parent.parent.parent
+      const blockNode = node.parent.parent.parent;
       const blockNodeHash = createHash(blockNode);
       if (processedBlockNodes[blockNodeHash]) {
         return;
