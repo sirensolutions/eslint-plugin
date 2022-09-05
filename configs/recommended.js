@@ -102,7 +102,7 @@ module.exports = {
     'wrap-iife': [ 'error', 'outside' ],
     yoda: 'off',
 
-    'object-curly-spacing': 'off', // overriden with babel/object-curly-spacing
+    'object-curly-spacing': 'off', // overridden with babel/object-curly-spacing
     'babel/object-curly-spacing': [ 'error', 'always' ],
 
     'react/jsx-uses-react': 'error',
@@ -152,6 +152,7 @@ module.exports = {
     'siren/memory-leak': 'error',
     'siren/nolookbehind': 'error',
     'siren/same-core-dependency-version': 'error',
+    'siren/no-double-await': 'error'
   },
   overrides: [
     {

@@ -1,0 +1,23 @@
+# editorconfig.org
+root = true
+
+[*]
+indent_style = space
+indent_size = 2
+end_of_line = lf
+charset = utf-8
+trim_trailing_whitespace = true
+insert_final_newline = true
+
+[*.{md,adoc,json,html}]
+trim_trailing_whitespace = false
+insert_final_newline = false
+
+# override the above rule to prevent removal of the new line from package.json files
+# which is always added by yarn and the IDE is always trying to remove it on save according to the above rule
+[package.json]
+insert_final_newline = true
+trim_trailing_whitespace = true
+
+[Makefile]
+indent_style = tab
