@@ -5,6 +5,7 @@ const memoryLeak = require('./rules/memory-leak/memory-leak');
 const sameCoreDependencyVersion = require('./rules/same-core-dependency-version/same-core-dependency-version');
 const nolookbehind = require('./rules/nolookbehind/nolookbehind');
 const noDoubleAwait = require('./rules/no-double-await/no-double-await');
+const noNewEnzymeTest = require('./rules/no-new-enzyme-test/no-new-enzyme-test');
 
 module.exports = {
   configs: {
@@ -14,7 +15,8 @@ module.exports = {
     'memory-leak': memoryLeak,
     'same-core-dependency-version': sameCoreDependencyVersion,
     'nolookbehind': nolookbehind,
-    'no-double-await': noDoubleAwait
+    'no-double-await': noDoubleAwait,
+    'no-new-enzyme-test': noNewEnzymeTest
   },
   processors: {
     '.json': {

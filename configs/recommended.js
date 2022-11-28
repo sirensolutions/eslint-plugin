@@ -152,7 +152,8 @@ module.exports = {
     'siren/memory-leak': 'error',
     'siren/nolookbehind': 'error',
     'siren/same-core-dependency-version': 'error',
-    'siren/no-double-await': 'error'
+    'siren/no-double-await': 'error',
+    'siren/no-new-enzyme-test': 'warn'
   },
   overrides: [
     {
