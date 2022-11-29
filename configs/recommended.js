@@ -153,7 +153,7 @@ module.exports = {
     'siren/nolookbehind': 'error',
     'siren/same-core-dependency-version': 'error',
     'siren/no-double-await': 'error',
-    'siren/no-new-enzyme-test': 'warn'
+    'siren/no-new-enzyme-test': 'error'
   },
   overrides: [
     {
