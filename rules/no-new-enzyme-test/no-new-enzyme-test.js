@@ -14,8 +14,8 @@ module.exports = {
       const line = context.getSourceCode().lines.findIndex(line => line.includes(`from 'enzyme'`));
       if (line != -1) {
         context.report({
-          message: `${filename} is a new enzyme test file. New enzyme test files are not permitted. Please create a cypress test instead`,
-          loc: { start: { line, column: 4 } }
+          message: 'Creating Enzyme tests is not allowed. Create a Cypress component test instead',
+          loc: { start: { line, column: 0 } }
         })
       }
     }
