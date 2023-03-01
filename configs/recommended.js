@@ -47,6 +47,7 @@ module.exports = {
     'block-scoped-var': 'error',
     camelcase: [ 'error', { properties: 'never' } ],
     'comma-dangle': 'off',
+    'comma-spacing': 'error',
     'comma-style': [ 'error', 'last' ],
     'consistent-return': 'off',
     curly: [ 'error', 'multi-line' ],
