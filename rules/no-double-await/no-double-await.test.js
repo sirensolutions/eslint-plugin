@@ -145,6 +145,15 @@ ruleTester.run('no-double-await', rule, {
   ],
   invalid: [
     {
+      name: 'binary operation',
+      code: `
+      async function main() {
+        const x = await getX();
+        const y = await getY(1+2);
+      }`,
+      errors
+    },
+    {
       name: 'second line arg as variable',
       code : `
       async function main() {
