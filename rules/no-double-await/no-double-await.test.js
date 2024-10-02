@@ -145,7 +145,16 @@ ruleTester.run('no-double-await', rule, {
   ],
   invalid: [
     {
-      name: 'binary operation',
+      name: 'UnaryExpression  as function argument',
+      code: `
+      async function main() {
+        const x = await getX();
+        const y = await getY(!1);
+      }`,
+      errors
+    },
+    {
+      name: 'BinaryExpression as function argument',
       code: `
       async function main() {
         const x = await getX();

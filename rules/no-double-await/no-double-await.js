@@ -182,7 +182,7 @@ function _addCallArgNames(context, nodes, arr) {
       }
     } else if (node.type === 'TemplateLiteral' && node.expressions) {
       _addCallArgNames(context, node.expressions, arr);
-    } else if (node.type === 'Literal' || node.type === 'ThisExpression' || node.type === 'BinaryExpression') {
+    } else if (node.type === 'Literal' || node.type === 'ThisExpression' || node.type === 'BinaryExpression' || node.type === 'UnaryExpression') {
       // Note:
       // do nothing as this would be things like true, false, 'string', 5, or this
     } else {
