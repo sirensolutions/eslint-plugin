@@ -145,7 +145,7 @@ ruleTester.run('no-double-await', rule, {
   ],
   invalid: [
     {
-      name: 'ternary operators',
+      name: 'super',
       code: `
 
       async function getWorksheets() {}
