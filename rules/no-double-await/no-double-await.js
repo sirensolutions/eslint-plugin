@@ -73,8 +73,9 @@ function IdentifierChecker(context) {
             const previousVariableNames = getVariableNames(context, previousLine);
             const currentCallArgNames = getCallArgNames(context, line.declarations[0].init);
 
+            // if this line do NOT include any variables computed in previous line we can report that the code can be optimized
             if (currentCallArgNames.length === 0 || !includeAtLeastOne(currentCallArgNames, previousVariableNames)) {
-                context.report({ node, message: 'Previous line is blocking the execution of this line use await Promise.all' });
+              context.report({ node, message: 'Previous line is blocking the execution of this line use await Promise.all' });
             }
           }
         }
@@ -182,6 +183,10 @@ function _addCallArgNames(context, nodes, arr) {
       }
     } else if (node.type === 'TemplateLiteral' && node.expressions) {
       _addCallArgNames(context, node.expressions, arr);
+    } else if (node.type === 'Super') {
+      _addCallArgNames(context, [node.parent], arr);
+    } else if (node.type === 'TSNonNullExpression' || node.type === 'TSAsExpression') {
+      _addCallArgNames(context, [node.expression], arr);
     } else if (node.type === 'Literal' || node.type === 'ThisExpression' || node.type === 'BinaryExpression' || node.type === 'UnaryExpression') {
       // Note:
       // do nothing as this would be things like true, false, 'string', 5, or this

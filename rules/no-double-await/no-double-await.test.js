@@ -145,6 +145,28 @@ ruleTester.run('no-double-await', rule, {
   ],
   invalid: [
     {
+      name: 'super',
+      code: `
+
+      async function getWorksheets() {}
+
+      class A {
+        sheetToJSON() {}
+      }
+
+      async function main() {
+
+        class B extends A {
+
+          async methodB2() {
+            const sheetInfo = await getWorksheets({ filePath: this.path });
+            const resp = await super.sheetToJSON(parserConfig);
+          }
+        }
+      }`,
+      errors
+    },
+    {
       name: 'UnaryExpression  as function argument',
       code: `
       async function main() {
