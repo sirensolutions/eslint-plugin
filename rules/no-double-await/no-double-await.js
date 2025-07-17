@@ -185,6 +185,8 @@ function _addCallArgNames(context, nodes, arr) {
     } else if (node.type === 'Literal' || node.type === 'ThisExpression' || node.type === 'BinaryExpression' || node.type === 'UnaryExpression') {
       // Note:
       // do nothing as this would be things like true, false, 'string', 5, or this
+    } else if (node.type === 'Super') {
+      _addCallArgNames(context, [node.parent], arr);
     } else {
       throw new Error ('Not implemented for type: ' + node.type)
     }
