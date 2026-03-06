@@ -32,7 +32,7 @@
   "peerDependencies": {
     "@typescript-eslint/eslint-plugin": "^8.0.0",
     "@typescript-eslint/parser": "^8.0.0",
-    "eslint": "^9.0.0",
+    "eslint": ">=8 <10",
     "eslint-plugin-import": "^2.31.0",
     "eslint-plugin-jest": "^28.0.0",
     "eslint-plugin-mocha": "^10.5.0",
