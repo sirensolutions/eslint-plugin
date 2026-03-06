@@ -7,12 +7,15 @@ const typescriptRules = {
   'semi': 'off',
   '@typescript-eslint/semi': 'error',
   '@typescript-eslint/type-annotation-spacing': 'error',
+  // @typescript-eslint/member-delimiter-style was moved to @typescript-eslint/eslint-plugin stylistic package in v6
   '@typescript-eslint/member-delimiter-style': 'error',
-  '@typescript-eslint/indent': ['error', 2],
+  'indent': 'off',
+  '@typescript-eslint/indent': ['error', 2], // overrides base indent rule for TypeScript files to handle TS-specific syntax correctly
   '@typescript-eslint/explicit-member-accessibility': 'error',
   '@typescript-eslint/explicit-function-return-type': ['error', { allowExpressions: true, allowTypedFunctionExpressions: true }],
   '@typescript-eslint/explicit-module-boundary-types': ['error', { allowArgumentsExplicitlyTypedAsAny: true }],
-  '@typescript-eslint/ban-types': ['error', { 'types': { '{}': false } }],
+  // @typescript-eslint/ban-types was removed in @typescript-eslint v6; @typescript-eslint/no-restricted-types is the replacement
+  '@typescript-eslint/no-restricted-types': ['error', { 'types': { '{}': false } }],
   '@typescript-eslint/no-inferrable-types': ['error', { 'ignoreParameters': false, 'ignoreProperties': true }]
 };
 
@@ -117,13 +120,12 @@ module.exports = {
     'import/export': 'error',
     'import/no-named-as-default': 'error',
     'import/no-named-as-default-member': 'error',
-    'import/no-duplicates': 'error',
+    'import/no-duplicates': 'error', // covers duplicate imports including TypeScript's 'import type'; replaces @typescript-eslint/no-duplicate-imports (removed in @typescript-eslint v6)
 
-    '@typescript-eslint/no-duplicate-imports': 'error',
-    '@typescript-eslint/no-extra-semi': 'error',
+    // '@typescript-eslint/no-duplicate-imports' was removed in @typescript-eslint v6; use import/no-duplicates instead
     '@typescript-eslint/no-use-before-define': ['error', { 'functions': false, 'classes': false }],
-    'no-duplicate-imports': 'off',
-    'no-extra-semi': 'off',
+    'no-duplicate-imports': 'off', // disabled in favour of import/no-duplicates which handles TypeScript import type syntax
+    'no-extra-semi': 'off', // disabled in favour of @typescript-eslint/no-extra-semi for TS files; handled in typescriptRules
     'no-use-before-define': 'off',
     'eol-last': 'error',
     'import/no-default-export': 'off',
