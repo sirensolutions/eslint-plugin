@@ -24,7 +24,6 @@ module.exports = {
   ],
   plugins: [
     'mocha',
-    'babel',
     'react',
     'react-hooks',
     'import',
@@ -102,9 +101,7 @@ module.exports = {
     'valid-typeof': 'error',
     'wrap-iife': [ 'error', 'outside' ],
     yoda: 'off',
-
-    'object-curly-spacing': 'off', // overridden with babel/object-curly-spacing
-    'babel/object-curly-spacing': [ 'error', 'always' ],
+    'object-curly-spacing': [ 'error', 'always' ], // replaces babel/object-curly-spacing (eslint-plugin-babel is deprecated; core rule covers the same functionality)
 
     'react/jsx-uses-react': 'error',
     'react/jsx-uses-vars': 'error',
