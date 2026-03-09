@@ -1,7 +1,7 @@
 const { RuleTester } = require('eslint');
 const rule = require('./no-double-await');
 
-const ruleTester = new RuleTester({ parserOptions: { ecmaVersion: 8 } });
+const ruleTester = new RuleTester({ languageOptions: { ecmaVersion: 2017 } });
 const errors = [{ message: 'Previous line is blocking the execution of this line use await Promise.all' }];
 
 ruleTester.run('no-double-await', rule, {

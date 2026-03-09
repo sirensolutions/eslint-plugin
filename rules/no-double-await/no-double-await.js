@@ -129,7 +129,8 @@ function isLine(node) {
 }
 
 function getVariableNames(context, node) {
-  const vars = context.getDeclaredVariables(node)
+  const sourceCode = context.getSourceCode ? context.getSourceCode() : context.sourceCode;
+  const vars = sourceCode.getDeclaredVariables(node);
   return vars.map(v => v.name);
 }
 

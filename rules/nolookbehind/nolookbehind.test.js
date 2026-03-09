@@ -18,7 +18,9 @@ ruleTester.run('nolookbehind', rule, {
     {   
         code: 'var re = /(?<=a)b/', 
         // using typescript parser as the default "espree" parser used by the test runner will fail to parse the regex 
-        parser: resolve('./node_modules/@typescript-eslint/parser/dist/parser.js'),
+        languageOptions: {
+            parser: require('@typescript-eslint/parser'),
+        },
         errors: [expectedError] 
     },
   ]
