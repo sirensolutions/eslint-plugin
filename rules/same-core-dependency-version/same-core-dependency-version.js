@@ -13,6 +13,9 @@ module.exports = {
       recommended: true,
       url: 'https://github.com/sirensolutions/eslint-plugin/blob/master/rules/same-core-dependency-version/same-core-dependency-version.md'
     },
+    messages: {
+      versionMismatch: 'Investigate core uses {{coreVersion}}, but this repo uses {{version}} of \'{{dependency}}\''
+    },
     schema: [
       {
         type: 'object',
@@ -51,7 +54,8 @@ module.exports = {
     for (const [dependency, version] of Object.entries(packageJson.dependencies)) {
       if (!!coreDependencies[dependency] && coreDependencies[dependency] !== version && !options.ignore.includes(dependency)) {
         context.report({
-          message: `Investigate core uses ${coreDependencies[dependency]}, but this repo uses ${version} of '${dependency}'`,
+          messageId: 'versionMismatch',
+          data: { coreVersion: coreDependencies[dependency], version, dependency },
           loc: {
             start: {
               line: dependencyLines.findIndex(line => line.includes(`"${dependency}"`)) + dependencyLinesStart + 1,

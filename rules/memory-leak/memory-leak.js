@@ -7,7 +7,10 @@ module.exports = {
       recommended: true,
       url: 'https://github.com/sirensolutions/eslint-plugin/blob/master/rules/memory-leak/memory-leak.md'
     },
-    schema: [] // no options
+    schema: [], // no options
+    messages: {
+      eventListenerNotRemoved: 'Event listener is never removed'
+    }
   },
   create: (context) => ({
     Identifier: IdentifierChecker(context)

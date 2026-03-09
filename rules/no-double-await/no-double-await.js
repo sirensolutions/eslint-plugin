@@ -9,7 +9,10 @@ module.exports = {
       recommended: true,
       url: 'https://github.com/sirensolutions/eslint-plugin/blob/master/rules/no-double-await/no-double-await.md'
     },
-    schema: [] // no options
+    schema: [], // no options
+    messages: {
+      doubleAwait: 'Previous line is blocking the execution of this line use await Promise.all'
+    }
   },
   create: (context) => ({
     Identifier: IdentifierChecker(context)

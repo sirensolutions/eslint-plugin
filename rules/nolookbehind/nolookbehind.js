@@ -58,10 +58,7 @@
                  if (pattern && pattern.indexOf('?<=') > 0) {
                     context.report({
                         node,
-                        messageId: "unexpected",
-                        data: {
-                            regularExpression: pattern
-                        }
+                        messageId: "unexpected"
                     });
                  }
              }

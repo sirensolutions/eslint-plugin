@@ -2,7 +2,11 @@ const { execSync } = require('child_process');
 
 module.exports = {
   meta: {
-    type: 'problem'
+    type: 'problem',
+    messages: {
+      noNewEnzymeTest: 'Creating Enzyme tests is not allowed. Create a Cypress component test instead'
+    },
+    schema: []
   },
   create: context => {
     // Get the newly added files and create a set of their names
@@ -14,7 +18,7 @@ module.exports = {
       const line = context.getSourceCode().lines.findIndex(line => line.includes(`from 'enzyme'`));
       if (line != -1) {
         context.report({
-          message: 'Creating Enzyme tests is not allowed. Create a Cypress component test instead',
+          messageId: 'noNewEnzymeTest',
           loc: { start: { line, column: 0 } }
         })
       }
