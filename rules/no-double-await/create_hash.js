@@ -1,7 +1,7 @@
 const crypto = require('crypto');
 
 const getCircularReplacer = () => {
-  const seen = new WeakSet(); // eslint-disable-line no-undef
+  const seen = new WeakSet();
   return (key, value) => {
     if (typeof value === 'object' && value !== null) {
       if (seen.has(value)) {
