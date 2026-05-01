@@ -55,7 +55,7 @@ function IdentifierChecker(context) {
       `.removeEventListener("${eventName}"`
     ];
 
-    const sourceCode = context.getSourceCode();
+    const sourceCode = context.sourceCode;
 
     function isFoundInSourceFile(pattern) {
       const escapedPattern = (objectName + pattern)
@@ -75,7 +75,7 @@ function IdentifierChecker(context) {
 
 function isTestFile(context) {
   const testFileNameRegex = /__tests__|test\/functional|tasks|functional_test_runner|junit_report_generation|core_plugins\/console\/public|gulpfile\.js/g;
-  return testFileNameRegex.test(context.getFilename());
+  return testFileNameRegex.test(context.filename);
 }
 
 function getObjectNameForNode(node) {

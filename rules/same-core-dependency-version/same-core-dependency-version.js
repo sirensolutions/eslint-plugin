@@ -31,11 +31,11 @@ module.exports = {
     ]
   },
   create: context => {
-    if (!packageJsonContents || path.basename(context.getFilename()) !== 'package.json' || !process.env.GITHUB_TOKEN) {
+    if (!packageJsonContents || path.basename(context.filename) !== 'package.json' || !process.env.GITHUB_TOKEN) {
       return {};
     }
 
-    const [dependencyLinesStart, dependencyLines] = getDependencyLines(context.getSourceCode().lines);
+    const [dependencyLinesStart, dependencyLines] = getDependencyLines(context.sourceCode.lines);
 
     const packageJson = JSON.parse(packageJsonContents.replace('module.exports = ', ''));
     if (!packageJson.dependencies) {

@@ -97,7 +97,7 @@ function includeAtLeastOne(a, b) {
 
 function isTestFile(context) {
   const testFileNameRegex = /\.test\.|__tests__|test\/functional/g;
-  return testFileNameRegex.test(context.getFilename());
+  return testFileNameRegex.test(context.filename);
 }
 
 ///////////////////////////// NODE CONDITIONALS /////////////////////////////
@@ -126,7 +126,7 @@ function isLine(node) {
 }
 
 function getVariableNames(context, node) {
-  const vars = context.getDeclaredVariables(node)
+  const vars = context.sourceCode.getDeclaredVariables(node)
   return vars.map(v => v.name);
 }
 
