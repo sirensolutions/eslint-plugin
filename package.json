@@ -1,6 +1,6 @@
 {
   "name": "eslint-plugin-siren",
-  "version": "2.4.9",
+  "version": "2.4.10",
   "description": "Provides custom eslint rules developed by Siren",
   "main": "index.js",
   "license": "MIT",
@@ -38,7 +38,7 @@
     "eslint-plugin-mocha": "^10.0.0",
     "eslint-plugin-prefer-object-spread": "^1.2.1",
     "eslint-plugin-react": "^7.30.1",
-    "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-react-hooks": "^5.2.0",
     "sync-request": "^6.1.0",
     "typescript": ">=5.0.0"
   },
